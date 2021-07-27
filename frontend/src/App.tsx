@@ -34,6 +34,7 @@ interface User {
 
 //create interface to establish the User type format
 interface Review {
+    _id: string,    
     text: string,
     user: string,
     book: string,
@@ -65,11 +66,12 @@ function App() {
             Promise.all([
                 usersService.find(),
                 booksService.find(),
-            ]).then(([usersPage, booksPage]) => {
+                reviewsService.find(),
+            ]).then(([usersPage, booksPage, reviewsPage]) => {
                 // We want the books and users in the reversed order
-
-                setAllBooks(booksPage.data.reverse());
                 setAllUsers(usersPage.data.reverse());
+                setAllBooks(booksPage.data.reverse());
+                setAllReviews(reviewsPage.data.reverse());
                 setLogin(loginResult);
 
             });
@@ -82,6 +84,7 @@ function App() {
             setLogin(null);
             setAllBooks([]);
             setAllUsers([]);
+            setAllReviews([]);
         });
 
         // Add new books to the books list
@@ -94,10 +97,10 @@ function App() {
             setAllUsers(currentUsers => currentUsers.concat(user))
         );
 
-        // // Add new review to the review list
-        // reviewsService.on('created', (user: any) =>
-        //     setAllReviews(currentReviews => currentReviews.concat(review))
-        // );
+        // Add new review to the review list
+        reviewsService.on('created', (review: any) =>
+            setAllReviews(currentReviews => currentReviews.concat(review))
+        );
 
     }, []);
 
@@ -115,7 +118,7 @@ function App() {
     return <Main allBooks={allBooks} allUsers={allUsers} />;
   }
   
-  console.log('login')
+  console.log(allReviews)
   return (
     <React.Fragment>
         <Header />
