@@ -1,15 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import { NavLink } from 'react-router-dom';
-
-import { Paginated } from '@feathersjs/feathers';
-import client from '../feathers';
-
-
-// create service
-const usersService = client.service('users');
 
 //create interface to establish the User type format
 interface User {
@@ -20,22 +13,9 @@ interface User {
   avatar: string,
 };
 
-function Users(){
+function Users(props: { allUsers: User[] }){
 
-  const [allUsers, setAllUsers] = useState<Array<User>>([]);
-  
-    //populate allUsers
-    useEffect(() => {
-        usersService
-        .find()
-        .then( (userPage: Paginated<User>) => {
-            setAllUsers(userPage.data);
-        })
-        .catch( (err: any) => {
-        console.log( "problem finding users.");
-        console.log(err);
-        });
-    }, []);
+  const allUsers = props.allUsers;
 
     //all users
     const usersCols = allUsers.map((user: User, index: number) => 
@@ -43,7 +23,7 @@ function Users(){
             <NavLink 
                 className='hover-effect text-yellow mx-3 my-auto p-2 text-decoration-none' 
                 to={{
-                    pathname:'/userDetails',
+                    pathname:`/user/${user._id}`,
                     state: {
                         id: user._id,
                         email: user.email,

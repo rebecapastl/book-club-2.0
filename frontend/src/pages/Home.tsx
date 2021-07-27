@@ -13,16 +13,21 @@ interface Book {
     owner: string,
 };
 
-//create interface to establish the User type format
-interface User {
-  _id: string,
-  email: string,
-  name: string,
-  password: string,
-  avatar: string,
-};
+//create interface to establish the Review type format
+interface Review {
+    text: string,
+    user: string,
+    book: string,
+    userId: string,
+    bookId: string,
+}
 
-function Home(props: { allUsers: User[]; allBooks: Book[] }){
+function Home(props: { newBook: Book }){
+
+    const newBook = props.newBook;
+    // const newReview = props.newReview;
+    console.log(props)
+
     return(
         <React.Fragment>
             <h2 className='montserrat-alternate text-yellow my-5 text-center'>Welcome to the Book Club</h2>
@@ -40,9 +45,9 @@ function Home(props: { allUsers: User[]; allBooks: Book[] }){
                 <Col className="d-flex justify-content-center" sm={6}>
                     
                     <Card className="text-yellow hover-effect shadow rounded-0 border-0 m-5" bg='dark' style={{ width: '18rem' }}>
-                        <Card.Img variant='top' src='/images/silma.jpg' alt='silma' />
+                        <Card.Img variant='top' src={newBook.cover} alt={newBook.title} />
                         <Card.Body className='d-flex align-items-center justify-content-center'>
-                            <Card.Title className='montserrat-alternate'>Book Title</Card.Title>
+                            <Card.Title className='montserrat-alternate'>{newBook.title}</Card.Title>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -51,9 +56,9 @@ function Home(props: { allUsers: User[]; allBooks: Book[] }){
                             <Card.Body>
                                 <Card.Title className='montserrat-alternate text-center'>Book Title</Card.Title>
                                 <Card.Text>
-                                    "Text of review lalalala la a ala ala alalala alalalala alala alala lalla alal"
+                                    {/* {newReview.text} */}
                                     <p className='small my-0 text-end'>
-                                        User
+                                        {/* {newReview.user} */}
                                     </p>
                                 </Card.Text>
                             </Card.Body>

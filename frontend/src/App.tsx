@@ -11,6 +11,7 @@ import client from './feathers';
 // create service
 const usersService = client.service('users');
 const booksService = client.service('books');
+const reviewsService = client.service('reviews');
 
 //create interface to establish the Book type format
 interface Book {
@@ -31,12 +32,22 @@ interface User {
   avatar: string,
 };
 
+//create interface to establish the User type format
+interface Review {
+    text: string,
+    user: string,
+    book: string,
+    userId: string,
+    bookId: string,
+}
+
 
 function App() {
 
     const [login, setLogin] = useState(null);
     const [allBooks, setAllBooks] = useState<Array<Book>>([]);
     const [allUsers, setAllUsers] = useState<Array<User>>([]);
+    const [allReviews, setAllReviews] = useState<Array<Review>>([]);
 
 
     // Authentication
@@ -49,22 +60,17 @@ function App() {
 
         client.on('authenticated', loginResult => {
             console.log(loginResult);
+
             //get books and users
             Promise.all([
                 usersService.find(),
                 booksService.find(),
-            ]).then(([booksPage, usersPage]) => {
+            ]).then(([usersPage, booksPage]) => {
                 // We want the books and users in the reversed order
-                const booksResult = booksPage.data.reverse()
-                const usersResult = usersPage.data.reverse()
 
-                setAllBooks(booksResult);
-                setAllUsers(usersResult);
+                setAllBooks(booksPage.data.reverse());
+                setAllUsers(usersPage.data.reverse());
                 setLogin(loginResult);
-
-                console.log(allBooks);
-                console.log(allUsers);
-                
 
             });
             //log page
@@ -87,6 +93,11 @@ function App() {
         usersService.on('created', (user: any) =>
             setAllUsers(currentUsers => currentUsers.concat(user))
         );
+
+        // // Add new review to the review list
+        // reviewsService.on('created', (user: any) =>
+        //     setAllReviews(currentReviews => currentReviews.concat(review))
+        // );
 
     }, []);
 

@@ -53,7 +53,20 @@ interface User {
   avatar: string,
 };
 
+//create interface to establish the Review type format
+interface Review {
+    text: string,
+    user: string,
+    book: string,
+    userId: string,
+    bookId: string,
+}
+
+
 function Main(props: { allUsers: User[]; allBooks: Book[] }){
+    
+    console.log(props.allBooks)
+    console.log(props.allUsers)
 
     return (
         <Router history={history}>
@@ -62,12 +75,27 @@ function Main(props: { allUsers: User[]; allBooks: Book[] }){
             <Navbar />
             <div className='main-wrapper'>
                 <Switch>
-                    <Route path="/books" component={Books} />
-                    <Route path="/details" component={BookDetails} />
-                    <Route path="/users" component={Users} />
-                    <Route path="/userDetails" component={UserDetails} />
+                    <Route 
+                        path="/books" 
+                        component={(allBooks: Book[]) => (
+                            <Books allBooks={props.allBooks} />
+                        )}
+                    />
+                    <Route path="/book/:id" component={BookDetails} />
+                    <Route 
+                        path="/users" 
+                        component={(allUsers: User[]) => (
+                            <Users allUsers={props.allUsers} />
+                        )}
+                    />
+                    <Route path="/user/:id" component={UserDetails} />
                     <Route path="/profile" component={Profile} />
-                    <Route path="/" component={Home} />
+                    <Route 
+                        path="/" 
+                        component={(allBooks: Book[]) => (
+                            <Home newBook={props.allBooks[0]} />
+                        )}
+                    />
                 </Switch>
             </div>
             <Footer />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,12 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import { NavLink } from 'react-router-dom';
 import AddBook from '../components/AddBook';
-
-import { Paginated } from '@feathersjs/feathers';
-import client from '../feathers';
-
-// create service
-const booksService = client.service('books');
 
 //create interface to establish the Book type format
 interface Book {
@@ -23,23 +17,12 @@ interface Book {
     owner: string,
 };
 
-function Books(){
+function Books(props: { allBooks: Book[] }){
+
+    console.log(props)
 
     const [openAddBook, setOpenAddBook] = useState(false);
-    const [allBooks, setAllBooks] = useState<Array<Book>>([]);
-
-    //populate allBooks
-    useEffect(() => {
-        booksService
-        .find()
-        .then( (bookPage: Paginated<Book>) => {
-            setAllBooks( bookPage.data );
-        })
-        .catch( (err: any) => {
-            console.log( "problem finding books.");
-            console.log(err);
-        });
-    }, []);
+    const allBooks = props.allBooks;
 
     //all books
     const booksCols = allBooks.map((book: Book, index: number) => 
@@ -47,7 +30,7 @@ function Books(){
             <NavLink 
                 className='hover-effect text-yellow mx-3 my-auto p-2 text-decoration-none' 
                 to={{
-                    pathname:'/details',
+                    pathname:`/book/${book._id}`,
                     state: {
                         id: book._id,
                         title: book.title,
