@@ -1,5 +1,6 @@
 
 import processAddBook from '../../hooks/process-add-book';
+import processDeleteBook from '../../hooks/process-delete-book';
 export default {
   before: {
     all: [],
@@ -8,7 +9,7 @@ export default {
     create: [processAddBook()],
     update: [],
     patch: [],
-    remove: []
+    remove: [processDeleteBook()]
   },
 
   after: {

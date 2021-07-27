@@ -49,18 +49,6 @@ function Users(props: { allUsers: User[] }){
     <React.Fragment>
       <h2 className='montserrat-alternate text-yellow text-center'>Book Club users</h2>            
       <Row xs={1} md={4} className='m-5'>
-        <Col>
-          <NavLink className='hover-effect text-yellow mx-3 my-auto p-2 text-decoration-none' to='/userDetails'>                                
-            <Image 
-              src='./images/silma.jpg' 
-              width={171}
-              height={180}
-              alt="silma"
-              roundedCircle 
-            />
-            <p className='h3 my-3'> -- User name -- </p>
-          </NavLink>
-        </Col>
         {usersCols}
       </Row>
     </React.Fragment>  

@@ -50,6 +50,10 @@ function BookDetails(props:DetailsProps){
     const [bookOwner, setBookOwner] = useState(props.location.state.owner);
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
 
+    const { user } = client.get('authentication')
+
+    console.log(user)
+    
     //populate allReviews
     useEffect(() => {
         reviewsService
