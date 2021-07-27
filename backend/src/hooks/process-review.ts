@@ -36,7 +36,7 @@ export default (options = {}): Hook => {
       // Book title can't be longer than 100 characters
       .substring(0, 100);
 
-    const bookId = data.book
+    const bookId = data.bookId
       // Book id can't be longer than 100 characters
       .substring(0, 100);
 

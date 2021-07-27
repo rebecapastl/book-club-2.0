@@ -1,9 +1,11 @@
 import React from 'react';
 import { Nav, Navbar as Bar} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button'
 import { NavLink } from 'react-router-dom';
 import { FaBook } from 'react-icons/fa';
 
-
+//Authentication
+import client from '../feathers';
 
 function NavBar(){
     return(
@@ -14,7 +16,7 @@ function NavBar(){
                         </NavLink>
                     </Bar.Brand>
                     <Bar.Toggle className='my-2 text-yellow' aria-controls="responsive-navbar-nav" />
-                    <Bar.Collapse id="responsive-navbar-nav position-relative">
+                    <Bar.Collapse id="responsive-navbar-nav position-relative mr-5">
                         <Nav className="mr-auto">
                             <Nav.Item className='hover-effect'>
                                 <NavLink className='hover-effect text-yellow h5 mx-3 my-auto p-2 text-decoration-none' to='/books'>
@@ -27,9 +29,9 @@ function NavBar(){
                                 </NavLink>
                             </Nav.Item>
                             <Nav.Item className="hover-effect position-absolute end-0">
-                                <NavLink className='hover-effect text-yellow h5 mx-3 my-auto p-2 text-decoration-none' to='/'>
-                                    Login
-                                </NavLink>
+                                <p className="text-yellow mx-4 h5" onClick={() => client.logout()}>
+                                    Logout
+                                </p>
                             </Nav.Item>
                         </Nav>
                     </Bar.Collapse>

@@ -113,30 +113,6 @@ function App() {
 
   );
 
-    
-    // return (
-    //     <Router history={history}>
-    //     <main className='bg-dark'>
-    //         <Header />
-    //         <div className='main-wrapper'>
-    //             <Switch>
-    //                 {!authenticated && 
-    //                     <Route path="/" component={Login} />
-    //                 }
-    //                 <Route path="/books" component={Books} />
-    //                 <Route path="/details" component={BookDetails} />
-    //                 <Route path="/users" component={Users} />
-    //                 <Route path="/userDetails" component={UserDetails} />
-    //                 <Route path="/" component={Login} />
-    //                 <Route path="/profile" component={Profile} />
-    //                 <Route path="/home" component={Home} />
-    //             </Switch>
-    //         </div>
-    //         <Footer />
-    //     </main>
-    //     </Router>
-
-    // )
 }
 
 export default App;
