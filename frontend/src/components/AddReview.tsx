@@ -16,9 +16,7 @@ const reviewsService = client.service('reviews');
 interface Review {
     _id: string,
     text: string,
-    user: string,
     book: string,
-    userId: string,
     bookId: string,
 };
 
@@ -31,9 +29,7 @@ interface BookProps {
 function AddReview(props: BookProps){
 
     const [text, setText] = useState("");
-    const [user, setUser] = useState("Rebeca");
     const [book, setBook] = useState(props.book);
-    const [userId, setUserId] = useState("123456");
     const [bookId, setBookId] = useState(props.bookId);
     const [generalErrorMessage, setGeneralErrorMessage] = useState("");
     const [generalErrorMessageClass, setGeneralErrorMessageClass] = useState("d-none");
@@ -49,7 +45,7 @@ function AddReview(props: BookProps){
 
             // create item in the database
             reviewsService
-            .create({ text, user, book, userId, bookId })
+            .create({ text, book, bookId })
             .then( (review: Review) => {
                 // successfully created review
                 setText("");

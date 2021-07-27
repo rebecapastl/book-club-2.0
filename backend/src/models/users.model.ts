@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
     email: { type: String, unique: true, lowercase: true, maxLength: 100, required: true },
     name: { type: String, maxLength: 60, required: true },
     password: { type: String, minLength: 8, maxLength: 60, required: true },
-    avatar:{ type: String, maxLength: 1000 },
+    avatar:{ type: String, maxLength: 20000 },
   }, {
     timestamps: true
   });

@@ -36,8 +36,6 @@ function AddBook(props: AddBookProps){
     const [author, setAuthor] = useState("");
     const [cover, setCover] = useState("");
     const [availability, setAvailability] = useState("");
-    const [owner, setOwner] = useState("Rogue");
-    const [ownerId, setOwnerId] = useState("606df007dfb5090015926c18");
     const [generalErrorMessage, setGeneralErrorMessage] = useState("");
     const [generalErrorMessageClass, setGeneralErrorMessageClass] = useState("d-none");
 
@@ -49,12 +47,12 @@ function AddBook(props: AddBookProps){
         if ( element.checkValidity() ) {
 
             
-            console.log({ title, author, cover, availability, owner, ownerId });
+            console.log({ title, author, cover, availability });
             element.classList.remove('was-validated');
 
             // create item in the database
             booksService
-            .create({ title, author, cover, availability, owner })
+            .create({ title, author, cover, availability })
             .then( (book: Book) => {
                 // successfully created book
                 setTitle("");
@@ -139,7 +137,7 @@ function AddBook(props: AddBookProps){
                     <Form.Label className='text-yellow pt-0' column='sm'>Paste a URL for the book cover</Form.Label>
                     <Form.Control 
                         type="text"
-                        maxLength={1000}
+                        maxLength={20000}
                         value={cover}
                         onChange={e => setCover( e.target.value )}
                     />

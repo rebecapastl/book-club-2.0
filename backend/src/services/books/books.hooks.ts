@@ -1,10 +1,11 @@
 
+import processAddBook from '../../hooks/process-add-book';
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [processAddBook()],
     update: [],
     patch: [],
     remove: []

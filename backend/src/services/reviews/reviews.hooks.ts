@@ -1,10 +1,11 @@
 
+import processReview from '../../hooks/process-review';
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [processReview()],
     update: [],
     patch: [],
     remove: []

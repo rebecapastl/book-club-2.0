@@ -249,7 +249,7 @@ function Login(){
                     <Form.Label className='text-yellow pt-0' column='sm'>Paste a URL as an avatar image</Form.Label>
                     <Form.Control 
                     type="text"
-                    maxLength={1000}
+                    maxLength={20000}
                     value={avatar}
                     onChange={e => setAvatar( e.target.value )}
                     />

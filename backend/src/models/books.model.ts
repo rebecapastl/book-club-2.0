@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
   const schema = new Schema({
     title: { type: String, required: true, maxLength: 100 },
     author: { type: String, required: true, maxLength: 60 },
-    cover: { type: String, required: true, maxLength: 1000 },
+    cover: { type: String, required: true, maxLength: 20000 },
     availability: { type: String, required: true, maxLength: 20 },
     owner: { type: String, required: true, maxLength: 60 },
     ownerId: { type: String, required: true, maxLength: 100 },

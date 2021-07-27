@@ -1,9 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 
 //create interface to establish the Book type format
 interface Book {
@@ -28,14 +26,6 @@ function Home(props: { allUsers: User[]; allBooks: Book[] }){
     return(
         <React.Fragment>
             <h2 className='montserrat-alternate text-yellow my-5 text-center'>Welcome to the Book Club</h2>
-            <div className="text-center">
-                <NavLink className='hover-effect text-yellow text-decoration-none' to='/signup'>
-                    <Button variant="warning" className="hover-effect mx-4">Sign Up</Button>
-                </NavLink> 
-                <NavLink className='hover-effect text-yellow text-decoration-none' to='/login'>
-                    <Button variant="outline-warning" className="hover-effect mx-4">Login</Button>
-                </NavLink>
-            </div>
             
             <Row className='mt-5'>
                 <Col className="text-center" sm={6}>

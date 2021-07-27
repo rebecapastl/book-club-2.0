@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import Home from '../pages/Home';
 import Books from '../pages/Books';
 import Users from '../pages/Users';
@@ -58,6 +59,7 @@ function Main(props: { allUsers: User[]; allBooks: Book[] }){
         <Router history={history}>
         <main className='bg-dark'>
             <Header />
+            <Navbar />
             <div className='main-wrapper'>
                 <Switch>
                     <Route path="/books" component={Books} />
