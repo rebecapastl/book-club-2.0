@@ -21,6 +21,7 @@ interface Book {
     cover: string,
     availability: string,
     owner: string,
+    ownerId: string,
 };
 
 //create interface to establish the User type format
@@ -50,7 +51,6 @@ function App() {
     const [allUsers, setAllUsers] = useState<Array<User>>([]);
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
 
-
     // Authentication
     useEffect(() => {
 
@@ -60,7 +60,6 @@ function App() {
         });
 
         client.on('authenticated', loginResult => {
-            console.log(loginResult);
 
             //get books and users
             Promise.all([
@@ -118,7 +117,6 @@ function App() {
     return <Main allBooks={allBooks} allUsers={allUsers} allReviews={allReviews}/>;
   }
   
-  console.log(allReviews)
   return (
     <React.Fragment>
         <Header />

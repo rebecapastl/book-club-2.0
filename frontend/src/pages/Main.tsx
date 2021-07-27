@@ -42,6 +42,7 @@ interface Book {
     cover: string,
     availability: string,
     owner: string,
+    ownerId: string,
 };
 
 //create interface to establish the User type format
@@ -66,9 +67,6 @@ interface Review {
 
 function Main(props: { allUsers: User[]; allBooks: Book[]; allReviews: Review[] }){
     
-    console.log(props.allBooks)
-    console.log(props.allUsers)
-
     return (
         <Router history={history}>
         <main className='bg-dark'>

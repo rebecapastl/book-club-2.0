@@ -52,9 +52,6 @@ function Login(){
                 action: "Add",
             });
                   
-            console.log(email);
-            console.log(password);
-
             //authentication
             return client
             .authenticate({
@@ -65,9 +62,6 @@ function Login(){
             // if error, display
             .catch( (err: any) => {
                 // failed to create user
-                console.log('ooops');  
-                console.log(email);
-                console.log(password);
                 setErrorMessage( err.message );
                 setErrorMessageClass("d-block text-center");
             });

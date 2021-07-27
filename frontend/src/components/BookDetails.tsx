@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {MouseEvent, useState, useEffect} from 'react';
+import { Redirect } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { ImQuotesLeft } from 'react-icons/im';
 import { ImQuotesRight } from 'react-icons/im';
@@ -35,6 +38,7 @@ interface DetailsProps {
             cover: string,
             availability: string,
             owner: string,
+            ownerId: string,
         }
     }
 }
@@ -42,18 +46,28 @@ interface DetailsProps {
 //cannot be rendered by itslf, it needs to be called from Books (NavLink props)
 function BookDetails(props:DetailsProps){
 
+    const [show, setShow] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+
     const [bookId, setBookId] = useState(props.location.state.id);
     const [bookTitle, setBookTitle] = useState(props.location.state.title);
     const [bookAuthor, setBookAuthor] = useState(props.location.state.author);
     const [bookCover, setBookCover] = useState(props.location.state.cover);
     const [bookAvailability, setBookAvailability] = useState(props.location.state.availability);
     const [bookOwner, setBookOwner] = useState(props.location.state.owner);
+    const [bookOwnerId, setBookOwnerId] = useState(props.location.state.ownerId);
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
+    const [currentUserOwner, setCurrentUserOwner] = useState(false);
 
-    const { user } = client.get('authentication')
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-    console.log(user)
-    
+    client.get('authentication')
+    .then((result: any) => { 
+        const user = result.user._id;
+        if (user === props.location.state.ownerId) setCurrentUserOwner(true)
+    });
+
     //populate allReviews
     useEffect(() => {
         reviewsService
@@ -70,6 +84,18 @@ function BookDetails(props:DetailsProps){
             console.log(err);
         });
     }, []);
+
+    const handleDeleteBook = (e: MouseEvent) => {
+        e.preventDefault();
+        console.log('delete account');
+        handleClose();
+        setRedirect(true);
+        
+    }
+
+    if (redirect) {
+        return <Redirect to='/books' />
+    }
 
     //all reviews for one book
     const reviewCols = allReviews.map((review: Review, index: number) => 
@@ -128,6 +154,33 @@ function BookDetails(props:DetailsProps){
                     <p className='text-yellow'>Author: {bookAuthor}</p>
                     <p className='text-yellow'>Availability: {bookAvailability}</p>
                     <p className='text-yellow'>Owner: {bookOwner}</p>
+                    {currentUserOwner &&
+                        <div>
+                            <Button variant="outline-warning" onClick={handleShow}>Delete Book</Button>
+                        </div>
+                    }
+                    <Modal
+                        show={show}
+                        onHide={handleClose}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header>
+                            <Modal.Title>Delete account</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            This action cannot be undone.
+                            Do you want do delete {bookTitle}?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Cancel
+                            </Button>
+                            <Button variant="danger" onClick={handleDeleteBook}>
+                                Delete book
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>                   
                 </Col>
             </Row>
             

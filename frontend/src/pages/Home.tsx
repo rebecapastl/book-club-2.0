@@ -13,6 +13,7 @@ interface Book {
     cover: string,
     availability: string,
     owner: string,
+    ownerId: string,
 };
 
 //create interface to establish the User type format

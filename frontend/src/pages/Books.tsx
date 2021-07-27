@@ -15,11 +15,10 @@ interface Book {
     cover: string,
     availability: string,
     owner: string,
+    ownerId: string,
 };
 
 function Books(props: { allBooks: Book[] }){
-
-    console.log(props)
 
     const [openAddBook, setOpenAddBook] = useState(false);
     const allBooks = props.allBooks;
@@ -38,6 +37,7 @@ function Books(props: { allBooks: Book[] }){
                         cover: book.cover,
                         availability: book.availability,
                         owner: book.owner,
+                        ownerId: book.ownerId,
                         }
                     }}
             >                       
