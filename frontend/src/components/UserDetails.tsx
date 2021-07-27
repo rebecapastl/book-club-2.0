@@ -82,7 +82,7 @@ function UserDetails(props:userDetails){
             <NavLink 
                 className='hover-effect text-yellow m-1 p-2 text-decoration-none' 
                 to={{
-                    pathname:'/details',
+                    pathname:`/book/${book._id}`,
                     state: {
                         id: book._id,
                         title: book.title,
@@ -130,8 +130,9 @@ function UserDetails(props:userDetails){
 
     //all reviews by one user
     const reviewCols = allReviews.map((review: Review, index: number) => 
-        <Col key={index}>
+        <Col key={index} lg={4}>
             <Card className="text-yellow shadow rounded-0 border-0" bg='dark'>
+                <Card.Title className='montserrat-alternate text-center m-3'>{review.book}</Card.Title>
                 <Card.Body className='align-items-center justify-content-center'>
                     <Card.Text>
                         <div className="m-2">

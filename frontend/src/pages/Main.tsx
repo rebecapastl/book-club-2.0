@@ -53,8 +53,9 @@ interface User {
   avatar: string,
 };
 
-//create interface to establish the Review type format
+//create interface to establish the User type format
 interface Review {
+    _id: string,
     text: string,
     user: string,
     book: string,
@@ -63,7 +64,7 @@ interface Review {
 }
 
 
-function Main(props: { allUsers: User[]; allBooks: Book[] }){
+function Main(props: { allUsers: User[]; allBooks: Book[]; allReviews: Review[] }){
     
     console.log(props.allBooks)
     console.log(props.allUsers)
@@ -93,7 +94,7 @@ function Main(props: { allUsers: User[]; allBooks: Book[] }){
                     <Route 
                         path="/" 
                         component={(allBooks: Book[]) => (
-                            <Home newBook={props.allBooks[0]} />
+                            <Home newBook={props.allBooks[0]} newReview={props.allReviews[0]}/>
                         )}
                     />
                 </Switch>

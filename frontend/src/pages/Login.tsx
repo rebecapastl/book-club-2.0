@@ -195,7 +195,7 @@ function Login(){
                         {/* disclaimer */}
                         <p className="text-yellow text-center">
                             Not a member yet? 
-                            <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(true); setShowLogin(false); }}> Sign up </span>
+                            <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(true); setShowLogin(false); setErrorMessageClass("d-none"); }}> Sign up </span>
                             now
                         </p>
                     </Form>  
@@ -296,7 +296,7 @@ function Login(){
                     {/* disclaimer */}
                     <p className="text-yellow text-center">
                     Already a member? 
-                    <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(false); setShowLogin(true); }}> Login </span>
+                    <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(false); setShowLogin(true); setErrorMessageClass("d-none"); }}> Login </span>
                     now
                     </p>
                                 

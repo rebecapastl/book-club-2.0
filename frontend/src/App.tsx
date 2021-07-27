@@ -115,7 +115,7 @@ function App() {
     );
   } else if (login) {
     console.log('main')
-    return <Main allBooks={allBooks} allUsers={allUsers} />;
+    return <Main allBooks={allBooks} allUsers={allUsers} allReviews={allReviews}/>;
   }
   
   console.log(allReviews)
