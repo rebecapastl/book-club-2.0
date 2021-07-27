@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200;300&family=Montserrat:wght@200;300&display=swap');
+
+:root {
+    --primary-colour: #ffc107;
+    --secondary-colour: #faf7d2;
+    --accent-background-colour: #000000;
+}
+
+/* sections */
+
+.main-wrapper{
+    min-height: 70vh;
+    margin: 0 auto;
+}
+
+/* typograpfy */
+
+body {
+    font-family: Montserrat, sans-serif !important;
+}
+
+.montserrat-alternate {
+    font-family: 'Montserrat Alternates' !important;
+}
+
+.text-yellow{
+    color:var(--primary-colour);
+}
+
+/* effects */
+
+.hover-effect:hover{
+    color:var(--secondary-colour);
+    transform: translateY(0.1rem);
+    cursor: pointer;
+}
+
+.footer-title{
+    margin-top:-3rem;
+}
+
+/* media */
+
+@media only screen and (min-width: 1800px) {
+
+    .main-wrapper{
+        min-height: 35vh;
+        width: 90vw;
+    }
+
+}

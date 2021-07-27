@@ -1,0 +1,15 @@
+default:
+    image: google/cloud-sdk:alpine
+    before_script:
+        - gcloud config set project $GOOGLE_CLOUD_PROJECT
+        - gcloud auth activate-service-account --key-file $GOOGLE_CLOUD_CREDENTIALS
+
+build:
+    stage: build
+    script:
+        - gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/book-club
+
+deploy:
+    stage: deploy
+    script:
+        - gcloud run deploy book-club --image gcr.io/$GOOGLE_CLOUD_PROJECT/book-club --platform managed --region us-west1 --allow-unauthenticated --update-env-vars MONGODBURI=$MONGODBURI --memory=1Gi
