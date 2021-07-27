@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { ImQuotesLeft } from 'react-icons/im';
 import { ImQuotesRight } from 'react-icons/im';
+import { FaTrashAlt } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import AddReview from '../components/AddReview';
 
@@ -46,7 +47,8 @@ interface DetailsProps {
 //cannot be rendered by itslf, it needs to be called from Books (NavLink props)
 function BookDetails(props:DetailsProps){
 
-    const [show, setShow] = useState(false);
+    const [showBookAlert, setShowBookAlert] = useState(false);
+    const [showReviewAlert, setShowReviewAlert] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
     const [bookId, setBookId] = useState(props.location.state.id);
@@ -57,15 +59,18 @@ function BookDetails(props:DetailsProps){
     const [bookOwner, setBookOwner] = useState(props.location.state.owner);
     const [bookOwnerId, setBookOwnerId] = useState(props.location.state.ownerId);
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
-    const [currentUserOwner, setCurrentUserOwner] = useState(false);
+    const [userOwnsBook, setUserOwnsBook] = useState(false);
+    const [userOwnsReview, setUserOwnsReview] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleCloseBookAlert = () => setShowBookAlert(false);
+    const handleShowBookAlert = () => setShowBookAlert(true);
+    const handleCloseReviewAlert = () => setShowReviewAlert(false);
+    const handleShowReviewAlert = () => setShowReviewAlert(true);
 
     client.get('authentication')
     .then((result: any) => { 
         const user = result.user._id;
-        if (user === props.location.state.ownerId) setCurrentUserOwner(true)
+        if (user === props.location.state.ownerId) setUserOwnsBook(true)
     });
 
     //populate allReviews
@@ -87,9 +92,16 @@ function BookDetails(props:DetailsProps){
 
     const handleDeleteBook = (e: MouseEvent) => {
         e.preventDefault();
-        console.log('delete account');
-        handleClose();
+        console.log('delete book');
+        handleCloseBookAlert();
         setRedirect(true);
+        
+    }
+
+    const handleDeleteReview = (e: MouseEvent) => {
+        e.preventDefault();
+        console.log('delete review');
+        handleCloseReviewAlert();
         
     }
 
@@ -101,6 +113,37 @@ function BookDetails(props:DetailsProps){
     const reviewCols = allReviews.map((review: Review, index: number) => 
         <Col key={index}>
             <Card className="text-yellow shadow rounded-0 border-0 m-3 p-2" bg='dark'>
+
+                {/* delete review */}
+                {userOwnsReview &&
+                    <div>
+                        <FaTrashAlt className='text-yellow hover-effect m-2 text-end' onClick={handleShowReviewAlert}/>
+                    </div>
+                    }
+                    <Modal
+                        show={showReviewAlert}
+                        onHide={handleCloseReviewAlert}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header>
+                            <Modal.Title>Delete review</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            This action cannot be undone.
+                            Do you want do delete this review?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleCloseReviewAlert}>
+                                Cancel
+                            </Button>
+                            <Button variant="danger" onClick={handleDeleteReview}>
+                                Delete review
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>    
+
+                {/* review info */}
                 <Card.Body className='align-items-center justify-content-center'>
                     <Card.Text>
                         <div className="m-2">
@@ -154,26 +197,26 @@ function BookDetails(props:DetailsProps){
                     <p className='text-yellow'>Author: {bookAuthor}</p>
                     <p className='text-yellow'>Availability: {bookAvailability}</p>
                     <p className='text-yellow'>Owner: {bookOwner}</p>
-                    {currentUserOwner &&
+                    {userOwnsBook &&
                         <div>
-                            <Button variant="outline-warning" onClick={handleShow}>Delete Book</Button>
+                            <Button variant="outline-warning" onClick={handleShowBookAlert}>Delete Book</Button>
                         </div>
                     }
                     <Modal
-                        show={show}
-                        onHide={handleClose}
+                        show={showBookAlert}
+                        onHide={handleCloseBookAlert}
                         backdrop="static"
                         keyboard={false}
                     >
                         <Modal.Header>
-                            <Modal.Title>Delete account</Modal.Title>
+                            <Modal.Title>Delete book</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             This action cannot be undone.
                             Do you want do delete {bookTitle}?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
+                            <Button variant="secondary" onClick={handleCloseBookAlert}>
                                 Cancel
                             </Button>
                             <Button variant="danger" onClick={handleDeleteBook}>
