@@ -60,7 +60,7 @@ function BookDetails(props:DetailsProps){
     const [bookOwnerId, setBookOwnerId] = useState(props.location.state.ownerId);
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
     const [userOwnsBook, setUserOwnsBook] = useState(false);
-    const [userOwnsReview, setUserOwnsReview] = useState(false);
+    const [currentUser, setCurrentUser] = useState("");
 
     const handleCloseBookAlert = () => setShowBookAlert(false);
     const handleShowBookAlert = () => setShowBookAlert(true);
@@ -69,8 +69,8 @@ function BookDetails(props:DetailsProps){
 
     client.get('authentication')
     .then((result: any) => { 
-        const user = result.user._id;
-        if (user === props.location.state.ownerId) setUserOwnsBook(true)
+        setCurrentUser(result.user._id);
+        if (currentUser === props.location.state.ownerId) setUserOwnsBook(true)
     });
 
     //populate allReviews
@@ -114,35 +114,6 @@ function BookDetails(props:DetailsProps){
         <Col key={index}>
             <Card className="text-yellow shadow rounded-0 border-0 m-3 p-2" bg='dark'>
 
-                {/* delete review */}
-                {userOwnsReview &&
-                    <div>
-                        <FaTrashAlt className='text-yellow hover-effect m-2 text-end' onClick={handleShowReviewAlert}/>
-                    </div>
-                    }
-                    <Modal
-                        show={showReviewAlert}
-                        onHide={handleCloseReviewAlert}
-                        backdrop="static"
-                        keyboard={false}
-                    >
-                        <Modal.Header>
-                            <Modal.Title>Delete review</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            This action cannot be undone.
-                            Do you want do delete this review?
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseReviewAlert}>
-                                Cancel
-                            </Button>
-                            <Button variant="danger" onClick={handleDeleteReview}>
-                                Delete review
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>    
-
                 {/* review info */}
                 <Card.Body className='align-items-center justify-content-center'>
                     <Card.Text>
@@ -164,8 +135,43 @@ function BookDetails(props:DetailsProps){
                             />
                         </div>
                     </Card.Text>
-                    <Card.Footer className='text-yellow small text-end'>
-                        {review.user}
+                    <Card.Footer className='text-yellow small'>
+                    
+                    {/* delete review */}
+                    <Row>
+
+                    
+                    {currentUser === review.userId &&
+                        <Col>
+                            <FaTrashAlt className='text-yellow hover-effect m-2' onClick={handleShowReviewAlert}/>
+                        </Col>
+                    }
+                        <Modal
+                            show={showReviewAlert}
+                            onHide={handleCloseReviewAlert}
+                            backdrop="static"
+                            keyboard={false}
+                        >
+                            <Modal.Header>
+                                <Modal.Title>Delete review</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                This action cannot be undone.
+                                Do you want do delete this review?
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseReviewAlert}>
+                                    Cancel
+                                </Button>
+                                <Button variant="danger" onClick={handleDeleteReview}>
+                                    Delete review
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>    
+                        <Col>
+                            <p className='text-end'>{review.user}</p>
+                        </Col>
+                        </Row>
                     </Card.Footer>
                 </Card.Body>
             </Card>
