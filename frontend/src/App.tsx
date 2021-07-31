@@ -3,7 +3,6 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import './css/app.css'
-import { Paginated } from '@feathersjs/feathers';
 
 //Authentication
 import client from './feathers';
@@ -57,7 +56,6 @@ function App() {
 
         client.authenticate().catch(() => {
             setLogin(null);
-            console.log('authenticate catch')
         });
 
         client.on('authenticated', loginResult => {
@@ -75,8 +73,6 @@ function App() {
                 setLogin(loginResult);
 
             });
-            //log page
-            console.log('authenticated loginResult log page')
         });
 
         // On logout reset all all local state (which will then show the login screen)
