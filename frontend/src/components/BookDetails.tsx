@@ -18,6 +18,8 @@ import client from '../feathers';
 
 // create service
 const reviewsService = client.service('reviews');
+const booksService = client.service('books');
+
 
 //create interface to establish the Review type format
 interface Review {
@@ -76,11 +78,7 @@ function BookDetails(props:DetailsProps){
     //populate allReviews
     useEffect(() => {
         reviewsService
-        .find({
-            query:{
-                bookId: bookId,
-            }
-        })
+        .find({query:{bookId: bookId,}})
         .then( (reviewPage: Paginated<Review>) => {
             setAllReviews( reviewPage.data );
         })
@@ -88,19 +86,45 @@ function BookDetails(props:DetailsProps){
             console.log( "problem finding reviews.");
             console.log(err);
         });
+
+        // Add new review to the review list
+        reviewsService.on('created', (review: any) =>
+            setAllReviews(currentReviews => currentReviews.concat(review))
+        );
+
+        // Remove deleted review from the review list
+        reviewsService.on('removed', () => {
+            reviewsService
+            .find({query:{bookId: bookId,}})
+            .then( (reviewPage: Paginated<Review>) => {
+                setAllReviews( reviewPage.data );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding reviews.");
+                console.log(err);
+            });
+        });
     }, []);
 
-    const handleDeleteBook = (e: MouseEvent) => {
-        e.preventDefault();
-        console.log('delete book');
+    const handleDeleteBook = (id: string) => {
+       console.log('delete book')
+        // booksService
+        // .remove(id)
+        // .catch( (err: any) => {
+        //     // Error: Cannot read property 'ownerId' of undefined
+        //     console.log( "problem deleting book.");
+        //     console.log(err);
+        // });
         handleCloseBookAlert();
-        setRedirect(true);
-        
     }
 
-    const handleDeleteReview = (e: MouseEvent) => {
-        e.preventDefault();
-        console.log('delete review');
+    const handleDeleteReview = (id: string) => {
+        reviewsService
+        .remove(id)
+        .catch( (err: any) => {
+            console.log( "problem deleting review.");
+            console.log(err);
+        });
         handleCloseReviewAlert();
         
     }
@@ -163,7 +187,7 @@ function BookDetails(props:DetailsProps){
                                 <Button variant="secondary" onClick={handleCloseReviewAlert}>
                                     Cancel
                                 </Button>
-                                <Button variant="danger" onClick={handleDeleteReview}>
+                                <Button variant="danger" onClick={() => handleDeleteReview(review._id)}>
                                     Delete review
                                 </Button>
                             </Modal.Footer>
@@ -203,7 +227,7 @@ function BookDetails(props:DetailsProps){
                     <p className='text-yellow'>Author: {bookAuthor}</p>
                     <p className='text-yellow'>Availability: {bookAvailability}</p>
                     <p className='text-yellow'>Owner: {bookOwner}</p>
-                    {userOwnsBook &&
+                    {currentUser === bookOwnerId &&
                         <div>
                             <Button variant="outline-warning" onClick={handleShowBookAlert}>Delete Book</Button>
                         </div>
@@ -225,7 +249,7 @@ function BookDetails(props:DetailsProps){
                             <Button variant="secondary" onClick={handleCloseBookAlert}>
                                 Cancel
                             </Button>
-                            <Button variant="danger" onClick={handleDeleteBook}>
+                            <Button variant="danger" onClick={() => handleDeleteBook(bookId)}>
                                 Delete book
                             </Button>
                         </Modal.Footer>

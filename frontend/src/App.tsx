@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import './css/app.css'
+import { Paginated } from '@feathersjs/feathers';
 
 //Authentication
 import client from './feathers';
@@ -101,19 +102,28 @@ function App() {
             setAllReviews(currentReviews => currentReviews.concat(review))
         );
 
+        // Remove deleted book from the books list
+        booksService.on('removed', (book: any) =>
+            setAllBooks(currentBooks => currentBooks.concat(book))
+        );
+
+        // Remove deleted user from the user list
+
+        usersService.on('removed', (user: any) =>
+            setAllUsers(currentUsers => currentUsers.concat(user))
+        );
+
     }, []);
 
     //pass on allBooks and allUsers to the children components
 
   if (login === undefined) {
-    console.log('undefined')
     return (
       <main className="container text-center">
         <h1>Loading...</h1>
       </main>
     );
   } else if (login) {
-    console.log('main')
     return <Main allBooks={allBooks} allUsers={allUsers} allReviews={allReviews}/>;
   }
   

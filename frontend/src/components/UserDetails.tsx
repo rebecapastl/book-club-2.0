@@ -93,7 +93,7 @@ function UserDetails(props:userDetails){
                         }
                     }}
             > 
-                <Card className="text-yellow hover-effect shadow rounded-0 border-0" bg='dark'>
+                <Card className="text-yellow hover-effect shadow m-4 rounded-0 border-0" bg='dark'>
                     <Card.Img variant='top' src={book.cover} width={200} alt={book.title} />
                     <Card.Body className='align-items-center justify-content-center'>
                         <Card.Title>{book.title}</Card.Title>
