@@ -53,6 +53,7 @@
     "feathers-mongoose": "^8.3.3",
     "helmet": "^4.6.0",
     "mongodb-core": "^3.2.7",
+    "mongodb-memory-server": "^7.3.4",
     "mongoose": "^5.13.3",
     "serve-favicon": "^2.5.0",
     "winston": "^3.3.3"
@@ -62,6 +63,7 @@
     "@types/cors": "^2.8.12",
     "@types/jest": "^26.0.24",
     "@types/jsonwebtoken": "^8.5.4",
+    "@types/node": "^16.4.8",
     "@types/serve-favicon": "^2.5.3",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",

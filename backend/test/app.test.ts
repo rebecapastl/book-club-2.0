@@ -2,10 +2,16 @@ import assert from 'assert';
 import { Server } from 'http';
 import url from 'url';
 import axios from 'axios';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import appFunc from '../src/appFunc';
+import expectCt from 'helmet/dist/middlewares/expect-ct';
 
-import app from '../src/app';
+let app : any;
+let port : any;
 
-const port = app.get('port') || 8998;
+
+// const port = app.get('port') || 8998;
+
 const getUrl = (pathname?: string): string => url.format({
   hostname: app.get('host') || 'localhost',
   protocol: 'http',
@@ -15,15 +21,22 @@ const getUrl = (pathname?: string): string => url.format({
 
 describe('Feathers application tests (with jest)', () => {
   let server: Server;
+  let mongoServer : any;
 
-  beforeAll(done => {
+  beforeAll(async done => {
+    mongoServer = new MongoMemoryServer();
+    process.env.MONGODBURI = await mongoServer.getUri();
+    app = appFunc();
+    port = app.get('port') || 8998;
     server = app.listen(port);
     server.once('listening', () => done());
   });
 
-  afterAll(done => {
+  afterAll(async done => {
     server.close(done);
+    await mongoServer.stop();
   });
+
 
   it('starts and shows the index page', async () => {
     expect.assertions(1);
@@ -53,7 +66,7 @@ describe('Feathers application tests (with jest)', () => {
 
     it('shows a 404 JSON error without stack trace', async () => {
       expect.assertions(4);
-      
+
       try {
         await axios.get(getUrl('path/to/nowhere'));
       } catch (error) {

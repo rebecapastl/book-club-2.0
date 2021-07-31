@@ -1,10 +1,27 @@
-import app from '../src/app';
+// import app from '../src/app';
+
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import appFunc from '../src/appFunc';
+
 
 describe('authentication', () => {
+  let mongoServer : any;
+  let app : any;
+
+  beforeAll(async () => {
+    mongoServer = new MongoMemoryServer();
+    process.env.MONGODBURI = await mongoServer.getUri();
+    app = appFunc();
+  });
+
+  afterAll(async () => {
+    await mongoServer.stop();
+  });
+
   it('registered the authentication service', () => {
     expect(app.service('authentication')).toBeTruthy();
   });
-  
+
   describe('local strategy', () => {
     const userInfo = {
       email: 'someone@example.com',
@@ -24,7 +41,7 @@ describe('authentication', () => {
         strategy: 'local',
         ...userInfo
       }, {});
-      
+
       expect(accessToken).toBeTruthy();
       expect(user).toBeTruthy();
     });

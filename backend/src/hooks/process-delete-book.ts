@@ -7,10 +7,9 @@ export default (options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
     const { data } = context;
 
-    // The authenticated user
     const user = context.params.user;
 
-    if(user!._id !== data.ownerId){
+    if(user!._id !== data.params.query.ownerId){
       throw new Error('You cannot delete this book');
     }
 

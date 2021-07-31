@@ -180,6 +180,7 @@ function UserDetails(props:userDetails){
                         alt={userName}
                         roundedCircle 
                     />
+                    <a className='text-yellow text-decoration-none hover-effect my-3 d-block' href={`mailto:` + userEmail}>{userEmail}</a>
                 </Col>
             </Row>
 

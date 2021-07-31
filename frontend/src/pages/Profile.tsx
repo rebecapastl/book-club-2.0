@@ -152,23 +152,23 @@ function Profile(props:userDetails){
         client.logout();
     }
 
-    const handleDeleteBook = (id: string) => {
+    const handleDeleteBook = (bookId: string, ownerId: string) => {
        
         console.log('delete book')
-        // booksService
-        // .remove(id)
-        // .then((book: Book) => {
-        //     //analytics
-        //     ReactGA.event({
-        //         category: "Book",
-        //         action: "Delete",
-        //     });
-        // })
-        // .catch( (err: any) => {
-        //     // Error: Cannot read property 'ownerId' of undefined
-        //     console.log( "problem deleting book.");
-        //     console.log(err);
-        // });
+        booksService
+        .remove(bookId, {query:{ownerId:ownerId}})
+        .then((book: Book) => {
+            //analytics
+            ReactGA.event({
+                category: "Book",
+                action: "Delete",
+            });
+        })
+        .catch( (err: any) => {
+            // Error: Cannot read property 'ownerId' of undefined
+            console.log( "problem deleting book.");
+            console.log(err);
+        });
         handleCloseBookAlert();
     }
 
@@ -243,7 +243,7 @@ function Profile(props:userDetails){
                     <Button variant="secondary" onClick={handleCloseBookAlert}>
                         Cancel
                     </Button>
-                    <Button variant="danger" onClick={() => handleDeleteBook(book._id)}>
+                    <Button variant="danger" onClick={() => handleDeleteBook(book._id, book.ownerId)}>
                         Delete book
                     </Button>
                     </Modal.Footer>
