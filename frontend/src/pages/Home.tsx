@@ -47,7 +47,7 @@ function Home(props: { newBook: Book; newReview: Review }){
             <Row>
                 <Col className="d-flex justify-content-center" sm={6}>
                     
-                    <Card className="text-yellow hover-effect shadow rounded-0 border-0 m-5" bg='dark' style={{ width: '18rem' }}>
+                    <Card className="text-yellow shadow rounded-0 border-0 m-5" bg='dark' style={{ width: '18rem' }}>
                         <Card.Img variant='top' src={newBook.cover} alt={newBook.title} />
                         <Card.Body className='d-flex align-items-center justify-content-center'>
                             <Card.Title className='montserrat-alternate'>{newBook.title}</Card.Title>
