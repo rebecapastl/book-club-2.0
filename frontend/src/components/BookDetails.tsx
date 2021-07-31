@@ -16,6 +16,9 @@ import AddReview from '../components/AddReview';
 import { Paginated } from '@feathersjs/feathers';
 import client from '../feathers';
 
+// analytics
+import ReactGA from 'react-ga';
+
 // create service
 const reviewsService = client.service('reviews');
 const booksService = client.service('books');
@@ -110,6 +113,13 @@ function BookDetails(props:DetailsProps){
        console.log('delete book')
         // booksService
         // .remove(id)
+        // .then((book: Book) => {
+        //     //analytics
+        //     ReactGA.event({
+        //         category: "Book",
+        //         action: "Delete",
+        //     });
+        // })
         // .catch( (err: any) => {
         //     // Error: Cannot read property 'ownerId' of undefined
         //     console.log( "problem deleting book.");
@@ -121,6 +131,13 @@ function BookDetails(props:DetailsProps){
     const handleDeleteReview = (id: string) => {
         reviewsService
         .remove(id)
+        .then((review: Review) => {
+            //analytics
+            ReactGA.event({
+                category: "Review",
+                action: "Delete",
+            });            
+        })
         .catch( (err: any) => {
             console.log( "problem deleting review.");
             console.log(err);

@@ -10,9 +10,11 @@ import { ImQuotesLeft } from 'react-icons/im';
 import { ImQuotesRight } from 'react-icons/im';
 import { FaTrashAlt } from 'react-icons/fa';
 
-
 import { Paginated } from '@feathersjs/feathers';
 import client from '../feathers';
+
+// analytics
+import ReactGA from 'react-ga';
 
 // create service
 const usersService = client.service('users');
@@ -130,6 +132,13 @@ function Profile(props:userDetails){
         console.log('delete user')
         // usersService
         // .remove(userId)
+        // .then((user: any) => {
+        //     //analytics
+        //     ReactGA.event({
+        //         category: "User",
+        //         action: "Delete",
+        //         });
+        //     })
         // .catch( (err: any) => {
         //     console.log( "problem deleting user.");
         //     console.log(err);
@@ -145,13 +154,21 @@ function Profile(props:userDetails){
 
     const handleDeleteBook = (id: string) => {
        
-        booksService
-        .remove(id)
-        .catch( (err: any) => {
-            // Error: Cannot read property 'ownerId' of undefined
-            console.log( "problem deleting book.");
-            console.log(err);
-        });
+        console.log('delete book')
+        // booksService
+        // .remove(id)
+        // .then((book: Book) => {
+        //     //analytics
+        //     ReactGA.event({
+        //         category: "Book",
+        //         action: "Delete",
+        //     });
+        // })
+        // .catch( (err: any) => {
+        //     // Error: Cannot read property 'ownerId' of undefined
+        //     console.log( "problem deleting book.");
+        //     console.log(err);
+        // });
         handleCloseBookAlert();
     }
 
@@ -159,6 +176,13 @@ function Profile(props:userDetails){
 
         reviewsService
         .remove(id)
+        .then((review: Review) => {
+            //analytics
+            ReactGA.event({
+                category: "Review",
+                action: "Delete",
+            });            
+        })
         .catch( (err: any) => {
             console.log( "problem deleting review.");
             console.log(err);
