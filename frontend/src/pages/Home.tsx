@@ -28,8 +28,8 @@ interface Review {
 
 function Home(props: { newBook: Book; newReview: Review }){
 
-    const newBook = props.newBook;
-    const newReview = props.newReview;
+    const newBook = props.newBook || {title: 'No books added', cover: ''};
+    const newReview = props.newReview || {book: 'No books reviewed', text: '', user: 'Be the first to comment'};;
 
     return(
         <React.Fragment>
