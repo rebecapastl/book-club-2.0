@@ -126,6 +126,7 @@ function BookDetails(props:DetailsProps){
         //     console.log(err);
         // });
         handleCloseBookAlert();
+        setRedirect(true);
     }
 
     const handleDeleteReview = (id: string) => {
