@@ -102,14 +102,14 @@ function Login(){
                     action: "Add",
                 });
 
-                // //authentication
-                // return client
-                // .authenticate({
-                //     strategy: 'local',
-                //     email: email,
-                //     password: password,
-                // }) 
-
+                //authentication
+                return client
+                .authenticate({
+                    strategy: 'local',
+                    email: email,
+                    password: password,
+                }) 
+               
             })
             // if error, display
             .catch( (err: any) => {
