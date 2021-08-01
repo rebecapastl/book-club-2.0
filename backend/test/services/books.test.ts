@@ -1,6 +1,7 @@
 // import app from '../../src/app';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import appFunc from '../../src/appFunc';
+import {describe, expect, beforeAll, afterAll, it} from '@jest/globals';
 
 
 describe('\'books\' service', () => {
@@ -15,13 +16,19 @@ describe('\'books\' service', () => {
     avatar: 'somestringavatar'
   };
 
+  const userInfoId = {
+    email: 'annemarie@xmen.com',
+    name:'Anne Marie',
+    password: 'roguexmen',
+    avatar: 'somestringavatar',
+    _id:'somestringid',
+  };
+
   const bookInfo = {
     title: 'The Silmarillion',
     author: 'J. R. R. Tolkien',
     cover: 'somestringcover',
     availability: 'Both',
-    owner: 'Anne Marie Rogue',
-    ownerId: 'somestringownerid',
   };
 
   const bookNoOwner = {
@@ -35,28 +42,22 @@ describe('\'books\' service', () => {
     author: 'J. R. R. Tolkien',
     cover: 'somestringcover',
     availability: 'Both',
-    owner: 'Anne Marie Rogue',
-    ownerId: 'somestringownerid',
   };
 
   const bookNoAuthor = {
     title: 'The Silmarillion',
     cover: 'somestringcover',
     availability: 'Both',
-    owner: 'Anne Marie Rogue',
-    ownerId: 'somestringownerid',
   };
 
   const bookNoCover = {
     title: 'The Silmarillion',
     author: 'J. R. R. Tolkien',
     availability: 'Both',
-    owner: 'Anne Marie Rogue',
-    ownerId: 'somestringownerid',
   };
 
   beforeAll(async () => {
-    mongoServer = new MongoMemoryServer();
+    mongoServer = await MongoMemoryServer.create();
     process.env.MONGODBURI = await mongoServer.getUri();
     app = appFunc();
     user = await app.service('users').create(userInfo);
@@ -72,13 +73,14 @@ describe('\'books\' service', () => {
   });
 
   it('creates correct book', async () => {
-    const book = await app.service('books').create(bookInfo);
+    const book = await app.service('books').create(bookInfo, {user:userInfoId});
     expect(book).toBeTruthy();
   });
 
   it('creates book with no cover', async () => {
-    const book = await app.service('books').create(bookNoCover);
-    expect(book).toBeTruthy();
+    await expect( async () => {
+      const book = await app.service('book').create(bookNoCover, {user:userInfoId});
+    }).rejects.toThrow();
   });
 
   it('creates book without owner', async () => {
@@ -89,13 +91,13 @@ describe('\'books\' service', () => {
 
   it('creates book with no title', async () => {
     await expect( async () => {
-      const book = await app.service('book').create(bookNoTitle);
+      const book = await app.service('book').create(bookNoTitle, {user:userInfoId});
     }).rejects.toThrow();
   });
 
   it('creates book with no author', async () => {
     await expect( async () => {
-      const book = await app.service('book').create(bookNoAuthor);
+      const book = await app.service('book').create(bookNoAuthor, {user:userInfoId});
     }).rejects.toThrow();
   });
 

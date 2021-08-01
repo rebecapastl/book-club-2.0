@@ -1,15 +1,14 @@
 // import app from '../src/app';
-
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import appFunc from '../src/appFunc';
-
+import {describe, expect, beforeAll, afterAll, it} from '@jest/globals';
 
 describe('authentication', () => {
   let mongoServer : any;
   let app : any;
 
   beforeAll(async () => {
-    mongoServer = new MongoMemoryServer();
+    mongoServer = await MongoMemoryServer.create();
     process.env.MONGODBURI = await mongoServer.getUri();
     app = appFunc();
   });
@@ -24,8 +23,10 @@ describe('authentication', () => {
 
   describe('local strategy', () => {
     const userInfo = {
-      email: 'someone@example.com',
-      password: 'supersecret'
+      email: 'annemarie@xmen.com',
+      name:'Anne Marie',
+      password: 'roguexmen',
+      avatar: 'somestringavatar'
     };
 
     beforeAll(async () => {

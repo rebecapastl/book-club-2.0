@@ -1,8 +1,7 @@
 // import app from '../../src/app';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import appFunc from '../../src/appFunc';
-
-
+import {describe, expect, beforeAll, afterAll, it} from '@jest/globals';
 
 describe('\'users\' service', () => {
   let mongoServer: any;
@@ -16,20 +15,19 @@ describe('\'users\' service', () => {
   };
 
   const userNoPassword = {
-    email: 'annemarie@xmen.com',
-    name:'Anne Marie',
+    email: 'remylebeau@xmen.com',
+    name:'Remy LeBeau',
     avatar: 'somestringavatar'
   };
 
-  const userShortPassword = {
-    email: 'annemarie@xmen.com',
-    name:'Anne Marie',
-    password: 'xmen',
-    avatar: 'somestringavatar'
+  const userNoAvatar = {
+    email: 'danimoonstar@newmutants.com',
+    name:'Danielle Moonstar',
+    password: 'n',
   };
 
   beforeAll(async () => {
-    mongoServer = new MongoMemoryServer();
+    mongoServer = await MongoMemoryServer.create();
     process.env.MONGODBURI = await mongoServer.getUri();
     app = appFunc();
   });
@@ -55,15 +53,15 @@ describe('\'users\' service', () => {
     }).rejects.toThrow();
   });
 
-    it('creates user with no password', async () => {
-    await expect( async () => {
-      const user = await app.service('users').create(userNoPassword);
-    }).rejects.toThrow();
+  it('creates user with no avatar', async () => {
+    const user = await app.service('users').create(userNoAvatar);
+    expect(user).toBeTruthy();
   });
 
-  it('creates user with a short password', async () => {
+
+  it('creates user with no password', async () => {
     await expect( async () => {
-      const user = await app.service('users').create(userShortPassword);
+      const user = await app.service('users').create(userNoPassword);
     }).rejects.toThrow();
   });
 

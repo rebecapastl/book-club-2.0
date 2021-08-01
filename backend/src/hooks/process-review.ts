@@ -20,12 +20,10 @@ export default (options = {}): Hook => {
       throw new Error('A review must have a bookId');
     }
 
-
+    console.log(data);
 
     // The authenticated user
     const user = context.params.user;
-
-    console.log(context.params);
 
     // The actual review text
     const text = data.text

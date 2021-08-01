@@ -1,16 +1,21 @@
-import assert from 'assert';
 import { Server } from 'http';
 import url from 'url';
 import axios from 'axios';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import {describe, expect, beforeAll, afterAll, it} from '@jest/globals';
+
+//import app from '../src/app';
+
+//const port = app.get('port') || 8998;
+
 import appFunc from '../src/appFunc';
-import expectCt from 'helmet/dist/middlewares/expect-ct';
 
-let app : any;
-let port : any;
+function sleep(ms:number) {
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
 
-
-// const port = app.get('port') || 8998;
+let app: any;
+let port: any;
 
 const getUrl = (pathname?: string): string => url.format({
   hostname: app.get('host') || 'localhost',
@@ -21,22 +26,26 @@ const getUrl = (pathname?: string): string => url.format({
 
 describe('Feathers application tests (with jest)', () => {
   let server: Server;
-  let mongoServer : any;
+  let mongoServer: any;
 
-  beforeAll(async done => {
-    mongoServer = new MongoMemoryServer();
-    process.env.MONGODBURI = await mongoServer.getUri();
+  //  beforeAll(async done => {
+  beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    process.env.MONGODBURI = mongoServer.getUri();
     app = appFunc();
     port = app.get('port') || 8998;
     server = app.listen(port);
-    server.once('listening', () => done());
+    await sleep(3000);
+    //    server.once('listening', () => done());
   });
 
-  afterAll(async done => {
-    server.close(done);
+  // afterAll(async done => {
+  afterAll(async () => {
+    //server.close(done);
+    server.close();
+    await sleep(3000);
     await mongoServer.stop();
   });
-
 
   it('starts and shows the index page', async () => {
     expect.assertions(1);

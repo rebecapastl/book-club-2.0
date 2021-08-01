@@ -28,6 +28,7 @@ export default (options = {}): Hook => {
     // The authenticated user
     const user = context.params.user;
 
+    console.log(data);
     console.log(context.params);
 
     // The actual book title

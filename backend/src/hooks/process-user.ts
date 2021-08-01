@@ -7,7 +7,7 @@ export default (options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
     const { app, data } = context;
 
-    // Throw an error if we didn't get a text
+    // Throw an error if we didn't get an email
     if(!data.email) {
       throw new Error('A user must have an email');
     }
@@ -42,12 +42,7 @@ export default (options = {}): Hook => {
       throw new Error('A user must have a password');
     }
 
-    if(data.password.length < 8) {
-      throw new Error('A password must have at least 8 characters');
-    }
-
-
-    console.log(context.params);
+    console.log(data);
 
     // The actual review text
     const email = data.email
@@ -62,11 +57,13 @@ export default (options = {}): Hook => {
       // Password id can't be longer than 60 characters
       .substring(0, 60);
 
-    const avatar = data.avatar
-      // Avatar id can't be longer than 20000 characters
-      .substring(0, 20000);
+    let avatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEP_MMlRInjPLsrly2_ThlKq_ytlxjIqap1w&usqp=CAU';
 
-
+    if (data.avatar){
+      avatar = data.avatar
+        // Avatar id can't be longer than 20000 characters
+        .substring(0, 20000);
+    }
 
     // Override the original data (so that people can't submit additional stuff)
     context.data = {
