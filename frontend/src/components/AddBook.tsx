@@ -139,8 +139,12 @@ function AddBook(props: AddBookProps){
                         type="text"
                         maxLength={20000}
                         value={cover}
+                        required 
                         onChange={e => setCover( e.target.value )}
                     />
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
+                        Choose an image to be the cover of your book.
+                    </Form.Control.Feedback>
                     </Form.Group>
 
                     {/* availability */}
@@ -183,6 +187,8 @@ function AddBook(props: AddBookProps){
                             variant='warning' 
                             className='text-center'
                             role="alert"
+                            dismissible
+                            onClose={() => setBookAdded(false)}
                         >
                             Book added successfully!
                         </Alert>
@@ -194,6 +200,8 @@ function AddBook(props: AddBookProps){
                             variant='danger' 
                             className={generalErrorMessageClass}
                             role="alert"
+                            dismissible
+                            onClose={() => setGeneralErrorMessageClass("d-none")}
                         >
                             {generalErrorMessage}
                         </Alert>

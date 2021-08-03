@@ -41,28 +41,34 @@ function AddReview(props: BookProps){
         // if all fields are validated
         if ( element.checkValidity() ) {
 
-            element.classList.remove('was-validated');
+          element.classList.remove('was-validated');
 
-            // create item in the database
-            reviewsService
-            .create({ text, book, bookId })
-            .then( (review: Review) => {
-                // successfully created review
-                setText("");
-                setGeneralErrorMessage("");
-                ReactGA.event({
-                    category: "AddReview",
-                    action: "Add",
-                });
-            })
-            .catch( (err: any) => {
-                // failed to create review
-                setGeneralErrorMessage( err.message );
-                setGeneralErrorMessageClass("d-block text-center");
+          // create item in the database
+          reviewsService
+          .create({ text, book, bookId })
+          .then( (review: Review) => {
+
+            // successfully created review, clean fields
+            setText("");
+            setGeneralErrorMessage("");
+            setGeneralErrorMessageClass("d-none");
+
+            //analytics
+            ReactGA.event({
+              category: "AddReview",
+              action: "Add",
             });
+
+          })
+          //if error, display
+          .catch( (err: any) => {
+            // failed to create review
+            setGeneralErrorMessage( err.message );
+            setGeneralErrorMessageClass("d-block text-center");
+          });
         } else {
-            //if the fields are not valid
-            element.classList.add('was-validated');
+          //if the fields are not valid
+          element.classList.add('was-validated');
         }
     }
 
@@ -86,7 +92,7 @@ function AddReview(props: BookProps){
                         required 
                         onChange={e => setText( e.target.value )}
                     />
-                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert" >
                         Your review must have from 5 to 300 characters
                     </Form.Control.Feedback>
                     </Form.Group>
@@ -111,6 +117,8 @@ function AddReview(props: BookProps){
                             variant='danger' 
                             className={generalErrorMessageClass}
                             role="alert"
+                            dismissible
+                            onClose={() => setGeneralErrorMessageClass("d-none")}
                         >
                             {generalErrorMessage}
                         </Alert>

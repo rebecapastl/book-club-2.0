@@ -41,6 +41,8 @@ export default (options = {}): Hook => {
     if(!data.password) {
       throw new Error('A user must have a password');
     }
+    // The password thatis contained in'data' is not the password actually written in the form,
+    // therefore, size validation is not possible
 
     console.log(data);
 

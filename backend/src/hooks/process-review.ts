@@ -12,10 +12,17 @@ export default (options = {}): Hook => {
       throw new Error('A review must have a text');
     }
 
+    // Throw an error if the review is shorter than 5 characters
+    if(data.text.length < 5) {
+      throw new Error('A review must have from 5 to 300 characters');
+    }
+
+    // Throw an error if we didn't get a book
     if(!data.book) {
       throw new Error('A review must have a book');
     }
 
+    // Throw an error if we didn't get a bookId
     if(!data.bookId) {
       throw new Error('A review must have a bookId');
     }

@@ -36,6 +36,7 @@ function Login(){
     const handleLogin = (e: FormEvent) => {
         e.preventDefault();
         const element = e.currentTarget as HTMLFormElement;
+        
         // if all fields are validated
         if ( element.checkValidity() ) {
             
@@ -186,6 +187,8 @@ function Login(){
                                 variant='danger' 
                                 className={errorMessageClass}
                                 role="alert"
+                                dismissible
+                                onClose={() => setErrorMessageClass("d-none")}
                             >
                                 {errorMessage}
                             </Alert>
@@ -294,6 +297,8 @@ function Login(){
                         variant='danger' 
                         className={errorMessageClass}
                         role="alert"
+                        dismissible
+                        onClose={() => setErrorMessageClass("d-none")}
                     >
                         {errorMessage}
                     </Alert>
@@ -305,6 +310,9 @@ function Login(){
                         variant='warning' 
                         className='text-center'
                         role="alert"
+                        dismissible
+                        onClose={() => setUserAdded(false)}
+
                     >
                         User registered successfully!
                     </Alert>
