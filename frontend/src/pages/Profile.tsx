@@ -82,7 +82,7 @@ function Profile(props:userDetails){
         booksService
         .find({query:{ownerId: userId,}})
         .then( (bookPage: Paginated<Book>) => {
-            setAllBooks( bookPage.data );
+            setAllBooks( bookPage.data.reverse() );
         })
         .catch( (err: any) => {
             console.log( "problem finding books.");
@@ -92,7 +92,7 @@ function Profile(props:userDetails){
         reviewsService
         .find({query:{userId: userId,}})
         .then( (reviewPage: Paginated<Review>) => {
-            setAllReviews( reviewPage.data );
+            setAllReviews( reviewPage.data.reverse() );
         })
         .catch( (err: any) => {
             console.log( "problem finding reviews.");
@@ -104,7 +104,7 @@ function Profile(props:userDetails){
             booksService
             .find({query:{ownerId: userId,}})
             .then( (bookPage: Paginated<Book>) => {
-                setAllBooks( bookPage.data );
+                setAllBooks( bookPage.data.reverse() );
             })
             .catch( (err: any) => {
                 console.log( "problem finding books.");
@@ -117,7 +117,7 @@ function Profile(props:userDetails){
             reviewsService
             .find({query:{userId: userId,}})
             .then( (reviewPage: Paginated<Review>) => {
-                setAllReviews( reviewPage.data );
+                setAllReviews( reviewPage.data.reverse() );
             })
             .catch( (err: any) => {
                 console.log( "problem finding reviews.");

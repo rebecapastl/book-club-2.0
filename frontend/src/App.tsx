@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import './css/app.css'
+import { Paginated } from '@feathersjs/feathers';
 
 //Authentication
 import client from './feathers';
@@ -84,30 +85,80 @@ function App() {
         });
 
         // Add new books to the books list
-        booksService.on('created', (book: any) =>
-            setAllBooks(currentBooks => currentBooks.concat(book))
-        );
+        booksService.on('created', (book: any) => {
+            // concat() appends the newest book at the end of the book list
+            // setAllBooks(currentBooks => currentBooks.concat(book))
+
+            booksService
+            .find({})
+            .then( (bookPage: Paginated<Book>) => {
+                setAllBooks( bookPage.data.reverse() );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding books.");
+                console.log(err);
+            });
+
+        });
 
         // Add new users to the user list
-        usersService.on('created', (user: any) =>
-            setAllUsers(currentUsers => currentUsers.concat(user))
-        );
+        usersService.on('created', (user: any) => {
+            // concat() appends the newest user at the end of the user list
+            // setAllUsers(currentUsers => currentUsers.concat(user))
+
+            usersService
+            .find({})
+            .then( (userPage: Paginated<User>) => {
+                setAllUsers( userPage.data.reverse() );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding users.");
+                console.log(err);
+            });
+        });
 
         // Add new review to the review list
-        reviewsService.on('created', (review: any) =>
-            setAllReviews(currentReviews => currentReviews.concat(review))
-        );
+        reviewsService.on('created', (review: any) => {
+            // concat() appends the newest review at the end of the review list
+            // setAllReviews(currentReviews => currentReviews.concat(review))
+
+            reviewsService
+            .find({})
+            .then( (reviewPage: Paginated<Review>) => {
+                setAllReviews( reviewPage.data.reverse() );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding reviews.");
+                console.log(err);
+            });
+        });
 
         // Remove deleted book from the books list
-        booksService.on('removed', (book: any) =>
-            setAllBooks(currentBooks => currentBooks.concat(book))
-        );
+        booksService.on('removed', (book: any) => {
+            booksService
+            .find({})
+            .then( (bookPage: Paginated<Book>) => {
+                setAllBooks( bookPage.data.reverse() );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding books.");
+                console.log(err);
+            });
+        });
 
         // Remove deleted user from the user list
 
-        usersService.on('removed', (user: any) =>
-            setAllUsers(currentUsers => currentUsers.concat(user))
-        );
+        usersService.on('removed', (user: any) =>{
+            usersService
+            .find({})
+            .then( (userPage: Paginated<User>) => {
+                setAllUsers( userPage.data.reverse() );
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding users.");
+                console.log(err);
+            });
+        });
 
     }, []);
 

@@ -59,8 +59,9 @@ function UserDetails(props:userDetails){
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
     const [allBooks, setAllBooks] = useState<Array<Book>>([]);
 
-    //populate allBooks
     useEffect(() => {
+
+        //populate allBooks
         booksService
         .find({
             query:{
@@ -74,6 +75,22 @@ function UserDetails(props:userDetails){
             console.log( "problem finding books.");
             console.log(err);
         });
+
+        //populate allReviews
+        reviewsService
+        .find({
+            query:{
+                userId: userId,
+            }
+        })
+        .then( (reviewPage: Paginated<Review>) => {
+            setAllReviews( reviewPage.data );
+        })
+        .catch( (err: any) => {
+            console.log( "problem finding reviews.");
+            console.log(err);
+        });
+
     }, []);
 
     //all books by one user
@@ -118,23 +135,6 @@ function UserDetails(props:userDetails){
             </NavLink>
         </Col>
     );
-
-    //populate allReviews
-    useEffect(() => {
-        reviewsService
-        .find({
-            query:{
-                userId: userId,
-            }
-        })
-        .then( (reviewPage: Paginated<Review>) => {
-            setAllReviews( reviewPage.data );
-        })
-        .catch( (err: any) => {
-            console.log( "problem finding reviews.");
-            console.log(err);
-        });
-    }, []);
 
     //all reviews by one user
     const reviewCols = allReviews.map((review: Review, index: number) => 

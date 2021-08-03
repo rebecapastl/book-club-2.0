@@ -81,7 +81,9 @@ function BookDetails(props:DetailsProps){
         reviewsService
         .find({query:{bookId: bookId,}})
         .then( (reviewPage: Paginated<Review>) => {
-            setAllReviews( reviewPage.data );
+            setAllReviews( reviewPage.data.reverse() );
+
+            console.log(allReviews)
         })
         .catch( (err: any) => {
             console.log( "problem finding reviews.");
@@ -89,16 +91,29 @@ function BookDetails(props:DetailsProps){
         });
 
         // Add new review to the review list
-        reviewsService.on('created', (review: any) =>
-            setAllReviews(currentReviews => currentReviews.concat(review))
-        );
+        reviewsService.on('created', (review: any) => {
+            // concat() appends the newest review at the end of the review
+            // setAllReviews(currentReviews => currentReviews.concat(review))
+            reviewsService
+            .find({query:{bookId: bookId,}})
+            .then( (reviewPage: Paginated<Review>) => {
+                setAllReviews( reviewPage.data.reverse() );
+                console.log(allReviews)
+            })
+            .catch( (err: any) => {
+                console.log( "problem finding reviews.");
+                console.log(err);
+            });
+        });
 
         // Remove deleted review from the review list
         reviewsService.on('removed', () => {
             reviewsService
             .find({query:{bookId: bookId,}})
             .then( (reviewPage: Paginated<Review>) => {
-                setAllReviews( reviewPage.data );
+                setAllReviews( reviewPage.data.reverse() );
+                console.log(allReviews)
+
             })
             .catch( (err: any) => {
                 console.log( "problem finding reviews.");
@@ -127,9 +142,12 @@ function BookDetails(props:DetailsProps){
         setRedirect(true);
     }
 
-    const handleDeleteReview = (id: string) => {
+    const handleDeleteReview = (_id: string) => {
+
+        console.log(_id)
+
         reviewsService
-        .remove(id)
+        .remove(_id)
         .then((review: Review) => {
             //analytics
             ReactGA.event({
@@ -150,9 +168,9 @@ function BookDetails(props:DetailsProps){
     }
 
     //all reviews for one book
-    const reviewCols = allReviews.map((review: Review, index: number) => 
-        <Col key={index}>
-            <Card className="text-yellow shadow rounded-0 border-0 m-3 p-2" bg='dark'>
+    const reviewCols = allReviews.map((review: Review) => 
+        <Col key={review._id}>
+            <Card id={review._id} className="text-yellow shadow rounded-0 border-0 m-3 p-2" bg='dark'>
 
                 {/* review info */}
                 <Card.Body className='align-items-center justify-content-center'>
