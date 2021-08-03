@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Redirect } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -161,8 +161,7 @@ function BookDetails(props:DetailsProps){
                     <Card.Text>
                         <div className="m-2">
                             <ImQuotesLeft 
-                                className='text-yellow' 
-                                role="button"  
+                                className='text-yellow'  
                                 size={20} 
                             />  
                         </div>
@@ -172,7 +171,6 @@ function BookDetails(props:DetailsProps){
                         <div className="m-2 text-end">
                             <ImQuotesRight 
                                 className='text-yellow' 
-                                role="button"  
                                 size={20} 
                             />
                         </div>
@@ -185,14 +183,30 @@ function BookDetails(props:DetailsProps){
                     
                     {currentUser === review.userId &&
                         <Col>
-                            <FaTrashAlt className='text-yellow hover-effect m-2' onClick={handleShowReviewAlert}/>
+                            <FaTrashAlt 
+                                id="deleteReviewButton"
+                                className='text-yellow hover-effect m-2' 
+                                onClick={handleShowReviewAlert}
+                                onKeyDown={e => { 
+                                    if (e.key === "Enter") {
+                                        handleShowReviewAlert();
+                                    }
+                                }}
+                                tabIndex={0}                                
+                                role="button"
+                                aria-haspopup="true"
+                                aria-controls="deleteReviewAlert"
+                            />
                         </Col>
                     }
                         <Modal
+                            id="deleteReviewAlert"                        
                             show={showReviewAlert}
                             onHide={handleCloseReviewAlert}
                             backdrop="static"
                             keyboard={false}
+                            role="alertdialog"
+                            aria-labelledby="deleteReviewButton"
                         >
                             <Modal.Header>
                                 <Modal.Title>Delete review</Modal.Title>
@@ -202,10 +216,18 @@ function BookDetails(props:DetailsProps){
                                 Do you want do delete this review?
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={handleCloseReviewAlert}>
+                                <Button 
+                                    variant="secondary"
+                                    onClick={handleCloseReviewAlert}
+                                    role="button" 
+                                >
                                     Cancel
                                 </Button>
-                                <Button variant="danger" onClick={() => handleDeleteReview(review._id)}>
+                                <Button 
+                                    variant="danger" 
+                                    onClick={() => handleDeleteReview(review._id)}
+                                    role="button" 
+                                >
                                     Delete review
                                 </Button>
                             </Modal.Footer>
@@ -225,8 +247,9 @@ function BookDetails(props:DetailsProps){
             <NavLink className='hover-effect text-yellow mx-3 my-auto p-2 text-decoration-none' to='/books'>
                 <RiArrowGoBackFill 
                     className='text-yellow hover-effect d-md-inline-block' 
-                    role="button"  
                     size={20} 
+                    role="link" 
+                    aria-label="Back to Books"
                 /> Back to Books
             </NavLink>
             
@@ -236,7 +259,12 @@ function BookDetails(props:DetailsProps){
             <Row className='m-5 justify-content-center'>
                 {/* book image */}
                 <Col md={6} className="text-center text-lg-end">
-                    <Image src={bookCover} alt={bookTitle} width={250}></Image>
+                    <Image 
+                        src={bookCover} 
+                        alt={bookTitle} 
+                        width={250}
+                        aria-label={bookTitle + `'s cover image`}  
+                    />
                 </Col>
 
                 {/* book info */}
@@ -247,14 +275,26 @@ function BookDetails(props:DetailsProps){
                     <p className='text-yellow'>Owner: {bookOwner}</p>
                     {currentUser === bookOwnerId &&
                         <div>
-                            <Button variant="outline-warning" onClick={handleShowBookAlert}>Delete Book</Button>
+                            <Button 
+                                id="deleteBookButton"
+                                variant="outline-warning" 
+                                onClick={handleShowBookAlert}
+                                role="button" 
+                                aria-haspopup="true"
+                                aria-controls="deleteBookAlert"
+                            >
+                                Delete Book
+                            </Button>
                         </div>
                     }
                     <Modal
+                        id="deleteBookAlert"
                         show={showBookAlert}
                         onHide={handleCloseBookAlert}
                         backdrop="static"
                         keyboard={false}
+                        role="alertdialog"
+                        aria-labelledby="deleteBookButton"
                     >
                         <Modal.Header>
                             <Modal.Title>Delete book</Modal.Title>
@@ -264,10 +304,18 @@ function BookDetails(props:DetailsProps){
                             Do you want do delete {bookTitle}?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseBookAlert}>
+                            <Button 
+                                variant="secondary" 
+                                onClick={handleCloseBookAlert}
+                                role="button" 
+                            >
                                 Cancel
                             </Button>
-                            <Button variant="danger" onClick={() => handleDeleteBook(bookId)}>
+                            <Button 
+                                variant="danger" 
+                                onClick={() => handleDeleteBook(bookId)}
+                                role="button" 
+                            >
                                 Delete book
                             </Button>
                         </Modal.Footer>

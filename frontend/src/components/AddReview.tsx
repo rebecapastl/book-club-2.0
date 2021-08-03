@@ -73,7 +73,8 @@ function AddReview(props: BookProps){
                 <Row className="mb-3" >
 
                     {/* text */}
-                    <Form.Group as={Col} controlId="formGridText">
+                    {/* Aria: controlId attribute links all form.groups elements to the same id/label controlId="text"*/}
+                    <Form.Group as={Col} controlId="text">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Review:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter your review up to 300 characters</Form.Label>
                     <Form.Control 
@@ -85,7 +86,7 @@ function AddReview(props: BookProps){
                         required 
                         onChange={e => setText( e.target.value )}
                     />
-                    <Form.Control.Feedback type="invalid" className="text-warning">
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
                         Your review must have from 5 to 300 characters
                     </Form.Control.Feedback>
                     </Form.Group>
@@ -93,16 +94,24 @@ function AddReview(props: BookProps){
                 </Row>
 
                 <Row>     
-                    {/* Add button */}
+                    {/* Add review button */}
                     <div className="col-lg-3 hover-effect d-block d-grid my-3" >
-                        <Button variant="warning" type="submit">
+                        <Button 
+                            variant="warning" 
+                            type="submit"
+                            role="button"
+                        >
                             Add review
                         </Button>
                     </div>
 
                     {/* failure message */}
                     {generalErrorMessage &&
-                        <Alert variant='danger' className={generalErrorMessageClass}>
+                        <Alert 
+                            variant='danger' 
+                            className={generalErrorMessageClass}
+                            role="alert"
+                        >
                             {generalErrorMessage}
                         </Alert>
                     }

@@ -211,8 +211,16 @@ function Profile(props:userDetails){
                             owner: book.owner,
                             }
                         }}
+                    role="link"
+                    aria-label="Click to go to the book's details page"
                 > 
-                    <Card.Img variant='top' src={book.cover} width={200} alt={book.title} />
+                    <Card.Img 
+                        variant='top' 
+                        src={book.cover} 
+                        width={200} 
+                        alt={book.title} 
+                        aria-label="Book's cover image"
+                    />
                     <Card.Body className='align-items-center justify-content-center'>
                         <Card.Title>{book.title}</Card.Title>
                         <Card.Text>
@@ -225,12 +233,25 @@ function Profile(props:userDetails){
                         </Card.Text>
                     </Card.Body>
                 </NavLink>
-                <Button variant="outline-warning" className="mx-5 mb-3" onClick={handleShowBookAlert}>Delete book</Button>
+                <Button 
+                    id="deleteBookButton"
+                    variant="outline-warning" 
+                    className="mx-5 mb-3"
+                    onClick={handleShowBookAlert} 
+                    role="button" 
+                    aria-haspopup="true"
+                    aria-controls="deleteBookAlert"
+                >
+                    Delete book
+                </Button>
                 <Modal
+                    id="deleteBookAlert"
                     show={showBookAlert}
                     onHide={handleCloseBookAlert}
                     backdrop="static"
                     keyboard={false}
+                    role="alertdialog"
+                    aria-labelledby="deleteBookButton"
                 >
                 <Modal.Header>
                     <Modal.Title>Delete book</Modal.Title>
@@ -240,10 +261,18 @@ function Profile(props:userDetails){
                     Do you want do delete {book.title}?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseBookAlert}>
+                    <Button 
+                        variant="secondary" 
+                        onClick={handleCloseBookAlert} 
+                        role="button" 
+                    >
                         Cancel
                     </Button>
-                    <Button variant="danger" onClick={() => handleDeleteBook(book._id, book.ownerId)}>
+                    <Button 
+                        variant="danger" 
+                        onClick={() => handleDeleteBook(book._id, book.ownerId)}
+                        role="button"
+                    >
                         Delete book
                     </Button>
                     </Modal.Footer>
@@ -263,8 +292,7 @@ function Profile(props:userDetails){
                     <Card.Text>
                         <div className="m-2">
                             <ImQuotesLeft 
-                                className='text-yellow' 
-                                role="button"  
+                                className='text-yellow'   
                                 size={20} 
                             />  
                         </div>
@@ -273,8 +301,7 @@ function Profile(props:userDetails){
                         </div>
                         <div className="m-2 text-end">
                             <ImQuotesRight 
-                                className='text-yellow' 
-                                role="button"  
+                                className='text-yellow'  
                                 size={20} 
                             />
                         </div>
@@ -285,14 +312,30 @@ function Profile(props:userDetails){
                     <Row>
 
                         <Col>
-                            <FaTrashAlt className='text-yellow hover-effect m-2' onClick={handleShowReviewAlert}/>
+                            <FaTrashAlt 
+                                id="deleteReviewButton"
+                                className='text-yellow hover-effect m-2' 
+                                onClick={handleShowReviewAlert}
+                                onKeyDown={e => { 
+                                    if (e.key === "Enter") {
+                                        handleShowReviewAlert();
+                                    }
+                                }}
+                                tabIndex={0}  
+                                role="button"
+                                aria-haspopup="true"
+                                aria-controls="deleteReviewAlert"
+                            />
                         </Col>
 
                         <Modal
+                            id="deleteReviewAlert"
                             show={showReviewAlert}
                             onHide={handleCloseReviewAlert}
                             backdrop="static"
                             keyboard={false}
+                            role="alertdialog"
+                            aria-labelledby="deleteReviewButton"
                         >
                             <Modal.Header>
                                 <Modal.Title>Delete review</Modal.Title>
@@ -302,10 +345,18 @@ function Profile(props:userDetails){
                                 Do you want do delete this review?
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="secondary" onClick={handleCloseReviewAlert}>
+                                <Button 
+                                    variant="secondary" 
+                                    onClick={handleCloseReviewAlert}
+                                    role="button" 
+                                >
                                     Cancel
                                 </Button>
-                                <Button variant="danger" onClick={() => handleDeleteReview(review._id)}>
+                                <Button 
+                                    variant="danger" 
+                                    onClick={() => handleDeleteReview(review._id)}
+                                    role="button" 
+                                    >
                                     Delete review
                                 </Button>
                             </Modal.Footer>
@@ -333,6 +384,7 @@ function Profile(props:userDetails){
                         height={180}
                         alt={userEmail}
                         roundedCircle 
+                        aria-label={userName + `'s avatar image`}
                     />
                     <h2 className='montserrat-alternate text-yellow text-center'>{userName}</h2>
                 </Col>
@@ -344,13 +396,25 @@ function Profile(props:userDetails){
                         <h3 className='text-yellow'>Account information</h3>
                         <p className='text-yellow'>User name: {userName}</p>
                         <p className='text-yellow'>Email: {userEmail}</p>
-                        <Button variant="outline-warning" onClick={handleShowAccountAlert}>Delete account</Button>
+                        <Button 
+                            id="deleteAccountButton"
+                            variant="outline-warning" 
+                            onClick={handleShowAccountAlert}
+                            role="button" 
+                            aria-haspopup="true"
+                            aria-controls="deleteAccountAlert"
+                        >
+                            Delete account
+                        </Button>
                     </div>
                     <Modal
+                        id="deleteAccountAlert"
                         show={showAccountAlert}
                         onHide={handleCloseAccountAlert}
                         backdrop="static"
                         keyboard={false}
+                        role="alertdialog"
+                        aria-labelledby="deleteAccountButton"
                     >
                         <Modal.Header>
                             <Modal.Title>Delete account</Modal.Title>
@@ -360,10 +424,18 @@ function Profile(props:userDetails){
                             Do you want do delete your account?
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseAccountAlert}>
+                            <Button 
+                                variant="secondary" 
+                                onClick={handleCloseAccountAlert} 
+                                role="button" 
+                            >
                                 Cancel
                             </Button>
-                            <Button variant="danger" onClick={() => handleDeleteAccount(userId)}>
+                            <Button 
+                                variant="danger" 
+                                onClick={() => handleDeleteAccount(userId)} 
+                                role="button"
+                            >
                                 Delete account
                             </Button>
                         </Modal.Footer>

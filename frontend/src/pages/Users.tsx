@@ -31,13 +31,16 @@ function Users(props: { allUsers: User[] }){
                         avatar: user.avatar,
                         }
                     }}
+                role="link"
+                aria-label="Click to go to the users's details page"  
             >     
             <Image 
               src={user.avatar} 
               width={171}
               height={180}
               alt={user.name}
-              roundedCircle 
+              roundedCircle
+              aria-label="User avatar image"
             />
             <p className='h3 my-3 text-yellow'>{user.name}</p>
           </NavLink>

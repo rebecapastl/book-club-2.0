@@ -92,9 +92,17 @@ function UserDetails(props:userDetails){
                         owner: book.owner,
                         }
                     }}
+                role="link"
+                aria-label="Click to go to the book's details page"           
             > 
                 <Card className="text-yellow hover-effect shadow m-4 rounded-0 border-0" bg='dark'>
-                    <Card.Img variant='top' src={book.cover} width={200} alt={book.title} />
+                    <Card.Img 
+                        variant='top' 
+                        src={book.cover} 
+                        width={200} 
+                        alt={book.title} 
+                        aria-label="Book's cover image"
+                    />
                     <Card.Body className='align-items-center justify-content-center'>
                         <Card.Title>{book.title}</Card.Title>
                         <Card.Text>
@@ -138,7 +146,6 @@ function UserDetails(props:userDetails){
                         <div className="m-2">
                             <ImQuotesLeft 
                                 className='text-yellow' 
-                                role="button"  
                                 size={20} 
                             />  
                         </div>
@@ -148,7 +155,6 @@ function UserDetails(props:userDetails){
                         <div className="m-2 text-end">
                             <ImQuotesRight 
                                 className='text-yellow' 
-                                role="button"  
                                 size={20} 
                             />
                         </div>
@@ -165,22 +171,31 @@ function UserDetails(props:userDetails){
         <React.Fragment>
             <NavLink className='hover-effect text-yellow mx-3 my-auto p-2 text-decoration-none' to='/users'>
                 <RiArrowGoBackFill 
-                    className='text-yellow hover-effect d-md-inline-block' 
-                    role="button"  
+                    className='text-yellow hover-effect d-md-inline-block'   
                     size={20} 
+                    role="link"
+                    aria-label="Back to Users"   
                 /> Back to Users
             </NavLink>
             <h2 className='montserrat-alternate text-yellow text-center'>{userName}</h2>            
             <Row>
                 <Col className="text-center my-5">
                     <Image 
+                        className='d-block mx-auto my-4'
                         src={userAvatar} 
                         width={171}
                         height={180}
                         alt={userName}
                         roundedCircle 
+                        aria-label="User avatar image"
                     />
-                    <a className='text-yellow text-decoration-none hover-effect my-3 d-block' href={`mailto:` + userEmail}>{userEmail}</a>
+                    <a 
+                        className='text-yellow text-decoration-none hover-effect my-3' 
+                        href={`mailto:` + userEmail}
+                        aria-label="Click here to send an email to this user"
+                    >
+                        {userEmail}
+                    </a>
                 </Col>
             </Row>
 

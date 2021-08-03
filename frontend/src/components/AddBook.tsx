@@ -85,7 +85,6 @@ function AddBook(props: AddBookProps){
                 {/* close button floating right */}
                 <CgClose 
                         className='text-white d-md-inline-block' 
-                        role="button"  
                         size={30} 
                         onClick={e => {
                             props.setOpenAddBook(false);
@@ -95,12 +94,15 @@ function AddBook(props: AddBookProps){
                             setAvailability("");
                             //set validation to classList.remove('was-validated');
                         }}
+                        role="button"  
+                        aria-label="close"
                     />
                 <h2 className='montserrat-alternate text-yellow text-center'>Add a book</h2>
                 <Row className="mb-3" >
 
                     {/* title */}
-                    <Form.Group as={Col} lg={3} controlId="formGridTitle">
+                    {/* Aria: controlId attribute links all form.groups elements to the same id/label controlId="title"*/}
+                    <Form.Group as={Col} lg={3} controlId="title">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Title:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter book title</Form.Label>
                     <Form.Control 
@@ -110,13 +112,13 @@ function AddBook(props: AddBookProps){
                         required 
                         onChange={e => setTitle( e.target.value )}
                     />
-                    <Form.Control.Feedback type="invalid" className="text-warning">
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
                         Enter a title for the boook.
                     </Form.Control.Feedback>
                     </Form.Group>
 
                     {/* author */}
-                    <Form.Group as={Col} lg={3} controlId="formGridAuthor">
+                    <Form.Group as={Col} lg={3} controlId="author">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Author:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter author name</Form.Label>
                     <Form.Control 
@@ -126,13 +128,13 @@ function AddBook(props: AddBookProps){
                         required 
                         onChange={e => setAuthor( e.target.value )}
                     />
-                    <Form.Control.Feedback type="invalid" className="text-warning">
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
                         If there is no author, insert "Unknown author".
                     </Form.Control.Feedback>
                     </Form.Group>
 
                     {/* cover */}
-                    <Form.Group as={Col} sm={12} md={6} lg={3} controlId="formGridCover">
+                    <Form.Group as={Col} sm={12} md={6} lg={3} controlId="cover">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Cover:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Paste a URL for the book cover</Form.Label>
                     <Form.Control 
@@ -144,7 +146,7 @@ function AddBook(props: AddBookProps){
                     </Form.Group>
 
                     {/* availability */}
-                    <Form.Group as={Col} md={6} lg={3} controlId="formGridAvailability">
+                    <Form.Group as={Col} md={6} lg={3} controlId="availability">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Availability:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>The book is available for...</Form.Label>
                     <Form.Control 
@@ -159,30 +161,42 @@ function AddBook(props: AddBookProps){
                         <option value="Trading">Trading</option>
                         <option value="Both">Both</option>
                     </Form.Control>
-                    <Form.Control.Feedback type="invalid" className="text-warning">
+                    <Form.Control.Feedback type="invalid" className="text-warning" role="alert">
                         Choose an option from the availability list.
                     </Form.Control.Feedback>
                     </Form.Group>
                 </Row>
 
                 <Row>     
-                    {/* Add button */}
+                    {/* Add book button */}
                     <div className="col-lg-3 hover-effect d-block d-grid my-3" >
-                        <Button variant="warning" type="submit">
-                            Add
+                        <Button 
+                            variant="warning" 
+                            type="submit"
+                            role="button"
+                        >
+                            Add book
                         </Button>
                     </div>
 
                     {/* Success message */}
                     {bookAdded &&
-                        <Alert variant='warning' className='text-center'>
+                        <Alert 
+                            variant='warning' 
+                            className='text-center'
+                            role="alert"
+                        >
                             Book added successfully!
                         </Alert>
                     }
 
                     {/* failure message */}
                     {!bookAdded && generalErrorMessage &&
-                        <Alert variant='danger' className={generalErrorMessageClass}>
+                        <Alert 
+                            variant='danger' 
+                            className={generalErrorMessageClass}
+                            role="alert"
+                        >
                             {generalErrorMessage}
                         </Alert>
                     }

@@ -140,7 +140,8 @@ function Login(){
                         <h4 className='text-yellow text-center'>Login to continue</h4>
 
                         {/* email */}
-                        <Form.Group controlId="formGridLoginEmail">
+                        {/* Aria: controlId attribute links all form.groups elements to the same id/label controlId="email"*/}
+                        <Form.Group controlId="loginEmail">
                         <Form.Label className='text-yellow d-block pb-0' column='lg'>Email:</Form.Label>
                         <Form.Label className='text-yellow pt-0' column='sm'>Enter your email</Form.Label>
                         <Form.Control 
@@ -156,7 +157,7 @@ function Login(){
                         </Form.Group>
 
                         {/* password */}
-                        <Form.Group controlId="formGridLoginPassword">
+                        <Form.Group controlId="loginPassword">
                         <Form.Label className='text-yellow d-block pb-0' column='lg'>Password:</Form.Label>
                         <Form.Label className='text-yellow pt-0' column='sm'>Enter your password</Form.Label>
                         <Form.Control 
@@ -174,14 +175,18 @@ function Login(){
 
                         {/* login button */}
                         <div className="hover-effect d-block d-grid my-5" >
-                            <Button variant="warning" type="submit">
+                            <Button variant="warning" type="submit" role="button">
                                 Login now
                             </Button>
                         </div>
 
                         {/* error message */}
                         {errorMessage &&
-                            <Alert variant='danger' className={errorMessageClass}>
+                            <Alert 
+                                variant='danger' 
+                                className={errorMessageClass}
+                                role="alert"
+                            >
                                 {errorMessage}
                             </Alert>
                         }
@@ -189,9 +194,19 @@ function Login(){
                         {/* disclaimer */}
                         <p className="text-yellow text-center">
                             Not a member yet? 
-                            <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(true); setShowLogin(false); setErrorMessageClass("d-none"); }}> Sign up </span>
-                            now
-                        </p>
+                            <span 
+                                className='hover-effect text-yellow text-decoration-none' 
+                                onClick={e => { setShowSignup(true); setShowLogin(false); setErrorMessageClass("d-none"); }}
+                                onKeyDown={e => { 
+                                    if (e.key === "Enter") {
+                                        setShowSignup(true); 
+                                        setShowLogin(false); 
+                                        setErrorMessageClass("d-none"); 
+                                    }
+                                }}
+                                tabIndex={0}                                
+                                role="link"
+                            > Sign up </span> now</p>
                     </Form>  
                 </Col>
             </Row>  
@@ -206,7 +221,7 @@ function Login(){
                                 
                     {/* email */}
                     <h4 className='text-yellow text-center'>Sign up to continue</h4>
-                    <Form.Group className='my-3' controlId="formEmail">
+                    <Form.Group className='my-3' controlId="email">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Email:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter your email</Form.Label>
                     <Form.Control 
@@ -222,7 +237,7 @@ function Login(){
                     </Form.Group>
 
                     {/* name */}
-                    <Form.Group className='my-3' controlId="formName">
+                    <Form.Group className='my-3' controlId="name">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Name:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter your name</Form.Label>
                     <Form.Control 
@@ -238,7 +253,7 @@ function Login(){
                     </Form.Group>
 
                     {/* avatar */}
-                    <Form.Group className='my-3' controlId="formGridAvatar">
+                    <Form.Group className='my-3' controlId="avatar">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Avatar:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Paste a URL as an avatar image</Form.Label>
                     <Form.Control 
@@ -250,7 +265,7 @@ function Login(){
                     </Form.Group>
 
                     {/* password */}
-                    <Form.Group className='my-3' controlId="formGridLoginPassword">
+                    <Form.Group className='my-3' controlId="password">
                     <Form.Label className='text-yellow d-block pb-0' column='lg'>Password:</Form.Label>
                     <Form.Label className='text-yellow pt-0' column='sm'>Enter your password</Form.Label>
                     <Form.Control 
@@ -268,31 +283,49 @@ function Login(){
 
                     {/* submit button */}
                     <div className="hover-effect d-block d-grid my-5" >
-                    <Button variant="warning" type="submit">
+                    <Button variant="warning" type="submit" role="button" >
                         Signup now
                     </Button>
                     </div>
 
                     {/* error message */}
                     {errorMessage &&
-                    <Alert variant='danger' className={errorMessageClass}>
+                    <Alert 
+                        variant='danger' 
+                        className={errorMessageClass}
+                        role="alert"
+                    >
                         {errorMessage}
                     </Alert>
                     }
 
                     {/* success message */}
                     {userAdded &&
-                    <Alert variant='warning' className='text-center'>
+                    <Alert 
+                        variant='warning' 
+                        className='text-center'
+                        role="alert"
+                    >
                         User registered successfully!
                     </Alert>
                     }
 
                     {/* disclaimer */}
                     <p className="text-yellow text-center">
-                    Already a member? 
-                    <span className='hover-effect text-yellow text-decoration-none' onClick={e => { setShowSignup(false); setShowLogin(true); setErrorMessageClass("d-none"); }}> Login </span>
-                    now
-                    </p>
+                        Already a member? 
+                        <span 
+                            className='hover-effect text-yellow text-decoration-none' 
+                            onClick={e => { setShowSignup(false); setShowLogin(true); setErrorMessageClass("d-none"); }}
+                            onKeyDown={e => { 
+                                if (e.key === "Enter") {
+                                    setShowSignup(false); 
+                                    setShowLogin(true); 
+                                    setErrorMessageClass("d-none");
+                                } 
+                            }}
+                            tabIndex={0}
+                            role="link"
+                        > Login </span> now</p>
                                 
                 </Form>  
 

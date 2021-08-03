@@ -48,7 +48,12 @@ function Home(props: { newBook: Book; newReview: Review }){
                 <Col className="d-flex justify-content-center" sm={6}>
                     
                     <Card className="text-yellow shadow rounded-0 border-0 m-5" bg='dark' style={{ width: '18rem' }}>
-                        <Card.Img variant='top' src={newBook.cover} alt={newBook.title} />
+                        <Card.Img 
+                            variant='top' 
+                            src={newBook.cover} 
+                            alt={newBook.title}
+                            aria-label="Newest book's cover image"
+                        />
                         <Card.Body className='d-flex align-items-center justify-content-center'>
                             <Card.Title className='montserrat-alternate'>{newBook.title}</Card.Title>
                         </Card.Body>
@@ -61,8 +66,7 @@ function Home(props: { newBook: Book; newReview: Review }){
                         <Card.Text>
                             <div className="m-2">
                                 <ImQuotesLeft 
-                                    className='text-yellow' 
-                                    role="button"  
+                                    className='text-yellow'  
                                     size={20} 
                                 />  
                             </div>
@@ -72,7 +76,6 @@ function Home(props: { newBook: Book; newReview: Review }){
                             <div className="m-2 text-end">
                                 <ImQuotesRight 
                                     className='text-yellow' 
-                                    role="button"  
                                     size={20} 
                                 />
                             </div>

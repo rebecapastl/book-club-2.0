@@ -40,9 +40,17 @@ function Books(props: { allBooks: Book[] }){
                         ownerId: book.ownerId,
                         }
                     }}
+                role="link"
+                aria-label="Click to go to the book's details page"  
             >                       
                 <Card className="text-yellow hover-effect shadow rounded-0 border-0 m-5" bg='dark'>
-                    <Card.Img variant='top' src={book.cover} width={200} alt={book.title} />
+                    <Card.Img 
+                        variant='top' 
+                        src={book.cover} 
+                        width={200} 
+                        alt={book.title} 
+                        aria-label="Book's cover image"
+                    />
                     <Card.Body className='align-items-center justify-content-center'>
                         <Card.Title>{book.title}</Card.Title>
                         <Card.Text>
@@ -70,14 +78,15 @@ function Books(props: { allBooks: Book[] }){
                 variant='warning'         
                 className="hover-effect mb-4 mx-5"
                 onClick={() => setOpenAddBook(!openAddBook)}
-                aria-controls="add-book"
+                role="button"
+                aria-controls="addBook"
                 aria-expanded={openAddBook}
             >
                 Add a book
             </Button>
 
             <Collapse in={openAddBook}> 
-                <div id="add-book">
+                <div id="addBook">
                     <AddBook setOpenAddBook={setOpenAddBook}/>
                 </div>
             </Collapse>
