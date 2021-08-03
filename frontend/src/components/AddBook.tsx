@@ -45,9 +45,7 @@ function AddBook(props: AddBookProps){
 
         // if all fields are validated
         if ( element.checkValidity() ) {
-
             
-            console.log({ title, author, cover, availability });
             element.classList.remove('was-validated');
 
             // create item in the database
