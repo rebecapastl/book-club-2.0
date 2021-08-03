@@ -12,7 +12,7 @@
 
 ## Description:
 
-The Book Club is a single-page website tha allows users to search for books available for trading or borrowing and write reviews on the books.
+The Book Club is a single-page website that allows users to search for books available for trading or borrowing and write reviews on the books.
 
 ## Requirements:
 
@@ -131,23 +131,23 @@ In this user manual, we will talk about how both can be used.
 
 ### SIGN UP
 
-The functionalities of the Book Club can only be accessed by regitered users.
+The functionalities of the Book Club can only be accessed by registered users.
 
 - Email field: 
 Insert the email into the field Email
 - Name field: 
 Insert the username into the field Name
 - Avatar field:
-Copy the URL/URI of the image and paste it into the field Avatar (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox and Edge)
+Copy the URL/URI of the image and paste it into the field Avatar (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox, and Edge)
 - Password
 Insert the password (minimum of 8 characters) into the Password field
 
 Press 'Signup now' for the user to be registered into the Book Club database.
-After a successful signup, the user will be automatically logged into the database.
+After successfully signup, the user will be automatically logged into the database.
 
 ### LOG IN
 
-The functionalities of the Book Club can only be accessed by regitered users.
+The functionalities of the Book Club can only be accessed by registered users.
 
 - Email field: 
 Insert the email used to register in the Book Club into the Email field
@@ -174,7 +174,7 @@ Insert the book’s name to the field Title
 - Author field:
 Insert the author’s name to the field Author
 - Cover field:
-Copy the URL/URI of the image and paste it into the field Cover (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox and Edge)
+Copy the URL/URI of the image and paste it into the field Cover (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox, and Edge)
 - Availability field:
 Choose from the dropdown if you are registering the book for trading with other users, for borrowing to other users, or if it is available for both
 
@@ -186,21 +186,24 @@ The user that registered the book will be named the owner of the book.
 
 If there are errors, they will be displayed below the 'Add' button. 
 
-An added book can be deleted only by its owner in the book details page and the owner profile page.
+An added book can be deleted only by its owner on the book details page and the owner profile page.
 
 #### See information about a book:
 
-By clicking on any book cover, you will be redirected to a page detailing the book iformation, and where a review about the book can be poste.
-I thant page you have access to the following information:
+By clicking on any book cover, you will be redirected to a page detailing the book's information, and where a review about the book can be posted.
+On that page, you have access to the following information:
+
 - Title
 - Author
 - Availability
 - Owner
 - Reviews written
 
+A 'delete book' button will appear below the book information for every book you've registered. By clicking on the delete button, a confirmation pop-up will appear and the book can be deleted.
+
 #### Add a review:
 
-In the book detail page you can write a review usinf the 'Add a review' form
+On the book detail page, you can write a review using the 'Add a review' form
 
 - Text field:
 Insert a review text between 5 and 300 characters
@@ -211,7 +214,7 @@ The new review will be exhibited above all other reviews.
 
 If there are errors, they will be displayed below the text field.
 
-A trash can icon will appear in the footer of every review you've posted. By clicking in the trash can, a confirmation pop up will appear and the review can be deleted.
+A trash can icon will appear in the footer of every review you've posted. By clicking in the trash can, a confirmation pop-up will appear and the review can be deleted.
 
 ### USER
 
@@ -224,7 +227,7 @@ All users will appear in chronological order (the newest user on the left).
 
 #### See information about a user:
 
-By clicking over a user avatar, you will be redirected to a page detailing the user iformation:
+By clicking over a user avatar, you will be redirected to a page detailing the user information:
 - Name
 - Email
 - Books registered
@@ -249,8 +252,12 @@ Reviews posted:
 - Reviews written by the user
 - Delete icon to each review
 
-The deletion of account, book or user cannot be reverted.
+A 'delete book' button will appear below the book information for every book you've registered. By clicking on the delete button, a confirmation pop-up will appear and the book can be deleted.
+
+A 'delete account' button will appear below the account information. By clicking on the delete button, a confirmation pop-up will appear and the account can be deleted.  
 Once deleting an account, all books registered and reviews written by the user will also be deleted.
+
+The deletion of an account, a book, or a user cannot be reverted.
 
 ### COPY IMAGE URL/URI
 
