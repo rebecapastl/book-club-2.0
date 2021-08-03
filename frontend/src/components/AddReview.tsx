@@ -28,9 +28,9 @@ interface BookProps {
 
 function AddReview(props: BookProps){
 
+    const book = props.book;
+    const bookId = props.bookId;
     const [text, setText] = useState("");
-    const [book, setBook] = useState(props.book);
-    const [bookId, setBookId] = useState(props.bookId);
     const [generalErrorMessage, setGeneralErrorMessage] = useState("");
     const [generalErrorMessageClass, setGeneralErrorMessageClass] = useState("d-none");
 

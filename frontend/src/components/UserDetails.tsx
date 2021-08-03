@@ -51,10 +51,10 @@ interface userDetails {
 //cannot be rendered by itslf, it needs to be called from Books (NavLink props)
 function UserDetails(props:userDetails){
 
-    const [userId, setUserId] = useState(props.location.state.id);
-    const [userEmail, setUserEmail] = useState(props.location.state.email);
-    const [userName, setUserName] = useState(props.location.state.name);
-    const [userAvatar, setUserAvatar] = useState(props.location.state.avatar);
+    const userId = props.location.state.id;
+    const userEmail = props.location.state.email;
+    const userName = props.location.state.name;
+    const userAvatar = props.location.state.avatar;
 
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
     const [allBooks, setAllBooks] = useState<Array<Book>>([]);

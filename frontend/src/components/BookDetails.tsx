@@ -56,15 +56,14 @@ function BookDetails(props:DetailsProps){
     const [showReviewAlert, setShowReviewAlert] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
-    const [bookId, setBookId] = useState(props.location.state.id);
-    const [bookTitle, setBookTitle] = useState(props.location.state.title);
-    const [bookAuthor, setBookAuthor] = useState(props.location.state.author);
-    const [bookCover, setBookCover] = useState(props.location.state.cover);
-    const [bookAvailability, setBookAvailability] = useState(props.location.state.availability);
-    const [bookOwner, setBookOwner] = useState(props.location.state.owner);
-    const [bookOwnerId, setBookOwnerId] = useState(props.location.state.ownerId);
+    const bookId = props.location.state.id;
+    const bookTitle = props.location.state.title;
+    const bookAuthor = props.location.state.author;
+    const bookCover = props.location.state.cover;
+    const bookAvailability = props.location.state.availability;
+    const bookOwner = props.location.state.owner;
+    const bookOwnerId = props.location.state.ownerId;
     const [allReviews, setAllReviews] = useState<Array<Review>>([]);
-    const [userOwnsBook, setUserOwnsBook] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
 
     const handleCloseBookAlert = () => setShowBookAlert(false);
@@ -75,7 +74,6 @@ function BookDetails(props:DetailsProps){
     client.get('authentication')
     .then((result: any) => { 
         setCurrentUser(result.user._id);
-        if (currentUser === props.location.state.ownerId) setUserOwnsBook(true)
     });
 
     //populate allReviews
