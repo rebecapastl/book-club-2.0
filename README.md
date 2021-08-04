@@ -121,25 +121,12 @@ Web address: https://www.pexels.com/photo/books-in-black-wooden-book-shelf-15971
 
 - User images (users submitted by the application and stored at the bookclub database on MongoDB)
 
-Source: Pexels (Free stock photos)  
-Author: Laura Garcia  
-Web address: https://www.pexels.com/photo/photo-of-old-man-wearing-sun-hat-3271268/  
-  
-Source: Pexels (Free stock photos)  
-Author: Edu Carvalho  
-Web address: https://www.pexels.com/photo/selective-focus-photography-of-woman-standing-near-green-plant-2050976/  
-  
-Source: Pexels (Free stock photos)  
-Author: Maria Orlova  
-Web address: https://www.pexels.com/photo/crop-serene-woman-standing-with-eyes-closed-against-light-wall-4906286/  
-  
-Source: Pexels (Free stock photos)  
-Author: Bruno Thethe  
-Web address: https://www.pexels.com/photo/man-leaning-on-red-cushion-2122850/  
+No Image user avatar: personal colection 
+
   
 - Book images (books submitted by the application and stored at the bookclub database on MongoDB)  
-  
-The Silmarillion and the Hobbit covers: personal collection  
+   
+No Image book cover: personal colection 
 
 ## User Manual:
 
@@ -155,9 +142,9 @@ The functionalities of the Book Club can only be accessed by registered users.
 Insert the email into the field Email
 - Name field: 
 Insert the username into the field Name
-- Avatar field:
+- Avatar field (optional):
 Copy the URL/URI of the image and paste it into the field Avatar (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox, and Edge)
-- Password
+- Password:
 Insert the password (minimum of 8 characters) into the Password field
 
 Press 'Signup now' for the user to be registered into the Book Club database.
@@ -169,7 +156,7 @@ The functionalities of the Book Club can only be accessed by registered users.
 
 - Email field: 
 Insert the email used to register in the Book Club into the Email field
-- Password
+- Password:
 Insert the password used to register in the Book Club into the Password field
 
 Press 'Login now' for the user to log into the Book Club database.
@@ -191,7 +178,7 @@ To add a new book, click on the button 'Add a book', which will expand a form to
 Insert the book’s name to the field Title
 - Author field:
 Insert the author’s name to the field Author
-- Cover field:
+- Cover field (optional):
 Copy the URL/URI of the image and paste it into the field Cover (refer to the end of the manual to see how to copy the URL/URI using Chrome, Firefox, and Edge)
 - Availability field:
 Choose from the dropdown if you are registering the book for trading with other users, for borrowing to other users, or if it is available for both
