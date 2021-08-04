@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
@@ -69,6 +69,7 @@ function Profile(props:userDetails){
     const [bookToDeleteId, setBookToDeleteId] = useState("");
     const [showReviewAlert, setShowReviewAlert] = useState(false);
     const [reviewToDeleteId, setReviewToDeleteId] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
 
 
@@ -132,6 +133,7 @@ function Profile(props:userDetails){
 
     const handleDeleteAccount = (userId: string) => {
 
+        setRedirect(true);
         client.logout();
 
         usersService
@@ -140,6 +142,7 @@ function Profile(props:userDetails){
 
             const mapBooks = allBooks.map((book: Book) => handleDeleteBook(book._id));
             const mapReviews = allReviews.map((review: Review) => handleDeleteReview(review._id));
+            
             handleCloseAccountAlert();
 
             //analytics
@@ -153,9 +156,7 @@ function Profile(props:userDetails){
             console.log( "problem deleting user.");
             console.log(err);
         })
-
-       
-        // setRedirect(true);
+    
         
     }
 
@@ -194,9 +195,9 @@ function Profile(props:userDetails){
         handleCloseReviewAlert();
     }
 
-    // if (redirect) {
-    //     return <Redirect to='/home' />
-    // }
+    if (redirect) {
+        return <Redirect to='/home' />
+    }
 
     //all user's books
     const booksCols = allBooks.map((book: Book, index: number) => 
