@@ -2,7 +2,7 @@ import feathers from '@feathersjs/client';
 import socketio from '@feathersjs/socketio-client';
 import io from 'socket.io-client';
 
-const socket = io('https://8080-cs-73368763033-default.cs-us-west1-ijlt.cloudshell.dev/');
+const socket = io('https://book-club-2tl5upt2lq-uw.a.run.app');
 const client = feathers();
 
 client.configure(socketio(socket));
