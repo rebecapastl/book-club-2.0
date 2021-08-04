@@ -67,6 +67,8 @@ function Profile(props:userDetails){
     const [showAccountAlert, setShowAccountAlert] = useState(false);
     const [showBookAlert, setShowBookAlert] = useState(false);
     const [showReviewAlert, setShowReviewAlert] = useState(false);
+    const [reviewToDeleteId, setReviewToDeleteId] = useState("");
+
 
 
     const handleCloseAccountAlert = () => setShowAccountAlert(false);
@@ -315,10 +317,11 @@ function Profile(props:userDetails){
                             <FaTrashAlt 
                                 id="deleteReviewButton"
                                 className='text-yellow hover-effect m-2' 
-                                onClick={handleShowReviewAlert}
+                                onClick={e => { handleShowReviewAlert(); setReviewToDeleteId(review._id);}}
                                 onKeyDown={e => { 
                                     if (e.key === "Enter") {
                                         handleShowReviewAlert();
+                                        setReviewToDeleteId(review._id);
                                     }
                                 }}
                                 tabIndex={0}  
@@ -327,40 +330,6 @@ function Profile(props:userDetails){
                                 aria-controls="deleteReviewAlert"
                             />
                         </Col>
-
-                        <Modal
-                            id="deleteReviewAlert"
-                            show={showReviewAlert}
-                            onHide={handleCloseReviewAlert}
-                            backdrop="static"
-                            keyboard={false}
-                            role="alertdialog"
-                            aria-labelledby="deleteReviewButton"
-                        >
-                            <Modal.Header>
-                                <Modal.Title>Delete review</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                This action cannot be undone.
-                                Do you want do delete this review?
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button 
-                                    variant="secondary" 
-                                    onClick={handleCloseReviewAlert}
-                                    role="button" 
-                                >
-                                    Cancel
-                                </Button>
-                                <Button 
-                                    variant="danger" 
-                                    onClick={() => handleDeleteReview(review._id)}
-                                    role="button" 
-                                    >
-                                    Delete review
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>    
 
                         <Col>
                             <p className='text-end'>{review.user}</p>
@@ -451,6 +420,39 @@ function Profile(props:userDetails){
             <Row className='shadow p-5'>
                 <h3 className='text-yellow'>Reviews posted</h3>
                 {reviewCols}
+                <Modal
+                    id="deleteReviewAlert"
+                    show={showReviewAlert}
+                    onHide={handleCloseReviewAlert}
+                    backdrop="static"
+                    keyboard={false}
+                    role="alertdialog"
+                    aria-labelledby="deleteReviewButton"
+                >
+                    <Modal.Header>
+                        <Modal.Title>Delete review</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        This action cannot be undone.
+                        Do you want do delete this review?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button 
+                            variant="secondary" 
+                            onClick={handleCloseReviewAlert}
+                            role="button" 
+                        >
+                            Cancel
+                        </Button>
+                        <Button 
+                            variant="danger" 
+                            onClick={() => handleDeleteReview(reviewToDeleteId)}
+                            role="button" 
+                            >
+                            Delete review
+                        </Button>
+                    </Modal.Footer>
+                </Modal>    
             </Row>
         </React.Fragment>  
     );

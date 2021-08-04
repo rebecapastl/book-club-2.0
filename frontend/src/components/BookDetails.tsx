@@ -49,11 +49,23 @@ interface DetailsProps {
     }
 }
 
+//create interface to establish the Book type format
+interface Book {
+    _id: string,
+    title: string,
+    author: string,
+    cover: string,
+    availability: string,
+    owner: string,
+    ownerId: string,
+};
+
 //cannot be rendered by itslf, it needs to be called from Books (NavLink props)
 function BookDetails(props:DetailsProps){
 
     const [showBookAlert, setShowBookAlert] = useState(false);
     const [showReviewAlert, setShowReviewAlert] = useState(false);
+    const [reviewToDeleteId, setReviewToDeleteId] = useState("");
     const [redirect, setRedirect] = useState(false);
 
     const bookId = props.location.state.id;
@@ -124,30 +136,30 @@ function BookDetails(props:DetailsProps){
 
     const handleDeleteBook = (id: string) => {
        console.log('delete book')
-        // booksService
-        // .remove(id)
-        // .then((book: Book) => {
-        //     //analytics
-        //     ReactGA.event({
-        //         category: "Book",
-        //         action: "Delete",
-        //     });
-        // })
-        // .catch( (err: any) => {
-        //     // Error: Cannot read property 'ownerId' of undefined
-        //     console.log( "problem deleting book.");
-        //     console.log(err);
-        // });
+        booksService
+        .remove({id})
+        .then((book: Book) => {
+            //analytics
+            ReactGA.event({
+                category: "Book",
+                action: "Delete",
+            });
+        })
+        .catch( (err: any) => {
+            // Error: Cannot read property 'ownerId' of undefined
+            console.log( "problem deleting book.");
+            console.log(err);
+        });
         handleCloseBookAlert();
         setRedirect(true);
     }
 
-    const handleDeleteReview = (_id: string) => {
+    const handleDeleteReview = (id: string) => {
 
-        console.log(_id)
+        console.log(id)
 
         reviewsService
-        .remove(_id)
+        .remove(id)
         .then((review: Review) => {
             //analytics
             ReactGA.event({
@@ -202,10 +214,11 @@ function BookDetails(props:DetailsProps){
                             <FaTrashAlt 
                                 id="deleteReviewButton"
                                 className='text-yellow hover-effect m-2' 
-                                onClick={handleShowReviewAlert}
+                                onClick={e => { handleShowReviewAlert(); setReviewToDeleteId(review._id);}}
                                 onKeyDown={e => { 
                                     if (e.key === "Enter") {
                                         handleShowReviewAlert();
+                                        setReviewToDeleteId(review._id);
                                     }
                                 }}
                                 tabIndex={0}                                
@@ -215,39 +228,6 @@ function BookDetails(props:DetailsProps){
                             />
                         </Col>
                     }
-                        <Modal
-                            id="deleteReviewAlert"                        
-                            show={showReviewAlert}
-                            onHide={handleCloseReviewAlert}
-                            backdrop="static"
-                            keyboard={false}
-                            role="alertdialog"
-                            aria-labelledby="deleteReviewButton"
-                        >
-                            <Modal.Header>
-                                <Modal.Title>Delete review</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                This action cannot be undone.
-                                Do you want do delete this review?
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button 
-                                    variant="secondary"
-                                    onClick={handleCloseReviewAlert}
-                                    role="button" 
-                                >
-                                    Cancel
-                                </Button>
-                                <Button 
-                                    variant="danger" 
-                                    onClick={() => handleDeleteReview(review._id)}
-                                    role="button" 
-                                >
-                                    Delete review
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>    
                         <Col>
                             <p className='text-end'>{review.user}</p>
                         </Col>
@@ -345,6 +325,39 @@ function BookDetails(props:DetailsProps){
                     <AddReview book={bookTitle} bookId={bookId}/>
                     <h3 className='text-yellow'>Reviews</h3>
                     {reviewCols}
+                    <Modal
+                        id="deleteReviewAlert"                        
+                        show={showReviewAlert}
+                        onHide={handleCloseReviewAlert}
+                        backdrop="static"
+                        keyboard={false}
+                        role="alertdialog"
+                        aria-labelledby="deleteReviewButton"
+                    >
+                        <Modal.Header>
+                            <Modal.Title>Delete review</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            This action cannot be undone.
+                            Do you want do delete this review?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button 
+                                variant="secondary"
+                                onClick={handleCloseReviewAlert}
+                                role="button" 
+                            >
+                                 Cancel
+                            </Button>
+                            <Button 
+                                variant="danger" 
+                                onClick={() => handleDeleteReview(reviewToDeleteId)}
+                                role="button" 
+                            >
+                                Delete review
+                            </Button>
+                        </Modal.Footer>
+                        </Modal>    
                 </Col>
             </Row>
             

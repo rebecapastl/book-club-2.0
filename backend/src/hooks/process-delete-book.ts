@@ -7,11 +7,13 @@ export default (options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
     const { data } = context;
 
-    const user = context.params.user;
+    // const user = context.params.user;
 
-    if(user!._id !== data.params.query.ownerId){
-      throw new Error('You cannot delete this book');
-    }
+    // if(user!._id !== data.user._id){
+    //   throw new Error('You cannot delete this book');
+    // }
+
+    console.log(data);
 
     // Override the original data (so that people can't submit additional stuff)
     context.data = {

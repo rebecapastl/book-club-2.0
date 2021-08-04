@@ -10,12 +10,12 @@ export default function (app: Application): Model<any> {
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
-    title: { type: String, required: true, maxLength: 100 },
-    author: { type: String, required: true, maxLength: 60 },
-    cover: { type: String, required: true, maxLength: 20000 },
-    availability: { type: String, required: true, maxLength: 20 },
-    owner: { type: String, required: true, maxLength: 60 },
-    ownerId: { type: String, required: true, maxLength: 100 },
+    title: { type: String, required: true, maxlength: 100 },
+    author: { type: String, required: true, maxlength: 60 },
+    cover: { type: String, required: true, maxlength: 20000 },
+    availability: { type: String, required: true, maxlength: 20 },
+    owner: { type: String, required: true, maxlength: 60 },
+    ownerId: { type: String, required: true, maxlength: 100 },
   }, {
     timestamps: true
   });

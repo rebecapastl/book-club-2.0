@@ -9,10 +9,10 @@ export default function (app: Application): Model<any> {
   const modelName = 'users';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const schema = new mongooseClient.Schema({
-    email: { type: String, unique: true, lowercase: true, maxLength: 100, required: true },
-    name: { type: String, maxLength: 60, required: true },
-    password: { type: String, minLength: 8, maxLength: 60, required: true },
-    avatar:{ type: String, maxLength: 20000 },
+    email: { type: String, unique: true, lowercase: true, maxlength: 100, required: true },
+    name: { type: String, maxlength: 60, required: true },
+    password: { type: String, minlength: 8, maxlength: 60, required: true },
+    avatar:{ type: String, maxlength: 20000 },
   }, {
     timestamps: true
   });
