@@ -21,6 +21,15 @@ The Book Club is a single-page website that allows users to search for books ava
 Download the files from the repository to your local computer.
 The files will be distributed among two folders: frontend and backend.
 
+### CI CD
+To perform CI CD in this project, the following environment variables must be present:
+
+| Key | Value | Type | Description |
+| --- | ---   | ---  | ---         |
+| GOOGLE_CLOUD_CREDENTIALS | Google Cloud Platform Service Account credentials | file |For more information about service accounts, visit Google Cloud Docs: https://cloud.google.com/iam/docs/service-accounts |
+| GOOGLE_CLOUD_PROJECT |Google Platform Project ID | variable | To locate your project ID visti API Console Help: https://support.google.com/googleapi/answer/7014113?hl=en |
+| MONGODBURI | Connection string to MongoDB | variable | Connection string to the database service in the format ```mongodb+srv://<username>:<password>@cluster0.ltxtw.mongodb.net/<database-name>``` . You can find the connection string for your database on your MongoDB Atlas Account > Database Deployments > Connect > Connect your application. More about MongoDB Atlas connnection strings: https://docs.mongodb.com/manual/reference/connection-string/|
+
 ### FRONTEND
 
 Access the frontend folder (```cd frontend```) and install the packages (```yarn install```). 
