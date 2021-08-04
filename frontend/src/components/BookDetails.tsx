@@ -94,8 +94,6 @@ function BookDetails(props:DetailsProps){
         .find({query:{bookId: bookId,}})
         .then( (reviewPage: Paginated<Review>) => {
             setAllReviews( reviewPage.data.reverse() );
-
-            console.log(allReviews)
         })
         .catch( (err: any) => {
             console.log( "problem finding reviews.");
@@ -135,9 +133,8 @@ function BookDetails(props:DetailsProps){
     }, []);
 
     const handleDeleteBook = (id: string) => {
-       console.log('delete book')
         booksService
-        .remove({id})
+        .remove(id)
         .then((book: Book) => {
             //analytics
             ReactGA.event({
@@ -155,9 +152,6 @@ function BookDetails(props:DetailsProps){
     }
 
     const handleDeleteReview = (id: string) => {
-
-        console.log(id)
-
         reviewsService
         .remove(id)
         .then((review: Review) => {
@@ -274,6 +268,7 @@ function BookDetails(props:DetailsProps){
                             <Button 
                                 id="deleteBookButton"
                                 variant="outline-warning" 
+                                // onClick={handleShowBookAlert}
                                 onClick={handleShowBookAlert}
                                 role="button" 
                                 aria-haspopup="true"

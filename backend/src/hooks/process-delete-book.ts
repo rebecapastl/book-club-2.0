@@ -5,26 +5,6 @@ import { Hook, HookContext } from '@feathersjs/feathers';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
-    const { data } = context;
-
-    // const user = context.params.user;
-
-    // if(user!._id !== data.user._id){
-    //   throw new Error('You cannot delete this book');
-    // }
-
-    console.log(data);
-
-    // Override the original data (so that people can't submit additional stuff)
-    context.data = {
-
-      bookId: data.bookId,
-
-      // Add the current date
-      createdAt: new Date().getTime()
-    };
-
-    // Best practice: hooks should always return the context
     return context;
   };
 };

@@ -66,6 +66,7 @@ function Profile(props:userDetails){
 
     const [showAccountAlert, setShowAccountAlert] = useState(false);
     const [showBookAlert, setShowBookAlert] = useState(false);
+    const [bookToDeleteId, setBookToDeleteId] = useState("");
     const [showReviewAlert, setShowReviewAlert] = useState(false);
     const [reviewToDeleteId, setReviewToDeleteId] = useState("");
 
@@ -131,34 +132,36 @@ function Profile(props:userDetails){
 
     const handleDeleteAccount = (userId: string) => {
 
-        console.log('delete user')
-        // usersService
-        // .remove(userId)
-        // .then((user: any) => {
-        //     //analytics
-        //     ReactGA.event({
-        //         category: "User",
-        //         action: "Delete",
-        //         });
-        //     })
-        // .catch( (err: any) => {
-        //     console.log( "problem deleting user.");
-        //     console.log(err);
-        // })
-
-        // const mapBooks = allBooks.map((book: Book) => handleDeleteBook(book._id));
-        const mapReviews = allReviews.map((review: Review) => handleDeleteReview(review._id));
-
-        handleCloseAccountAlert();
-        // setRedirect(true);
         client.logout();
+
+        usersService
+        .remove(userId)
+        .then((user: any) => {
+
+            const mapBooks = allBooks.map((book: Book) => handleDeleteBook(book._id));
+            const mapReviews = allReviews.map((review: Review) => handleDeleteReview(review._id));
+            handleCloseAccountAlert();
+
+            //analytics
+            ReactGA.event({
+                category: "User",
+                action: "Delete",
+            });
+
+        })
+        .catch( (err: any) => {
+            console.log( "problem deleting user.");
+            console.log(err);
+        })
+
+       
+        // setRedirect(true);
+        
     }
 
-    const handleDeleteBook = (bookId: string, ownerId: string) => {
-       
-        console.log('delete book')
+    const handleDeleteBook = (bookId: string) => {
         booksService
-        .remove(bookId, {query:{ownerId:ownerId}})
+        .remove(bookId)
         .then((book: Book) => {
             //analytics
             ReactGA.event({
@@ -174,10 +177,9 @@ function Profile(props:userDetails){
         handleCloseBookAlert();
     }
 
-    const handleDeleteReview = (id: string) => {
-
+    const handleDeleteReview = (reviewId: string) => {
         reviewsService
-        .remove(id)
+        .remove(reviewId)
         .then((review: Review) => {
             //analytics
             ReactGA.event({
@@ -193,7 +195,7 @@ function Profile(props:userDetails){
     }
 
     // if (redirect) {
-    //     return <Redirect to='/login' />
+    //     return <Redirect to='/home' />
     // }
 
     //all user's books
@@ -239,46 +241,13 @@ function Profile(props:userDetails){
                     id="deleteBookButton"
                     variant="outline-warning" 
                     className="mx-5 mb-3"
-                    onClick={handleShowBookAlert} 
+                    onClick={e => { handleShowBookAlert(); setBookToDeleteId(book._id);}}
                     role="button" 
                     aria-haspopup="true"
                     aria-controls="deleteBookAlert"
                 >
                     Delete book
                 </Button>
-                <Modal
-                    id="deleteBookAlert"
-                    show={showBookAlert}
-                    onHide={handleCloseBookAlert}
-                    backdrop="static"
-                    keyboard={false}
-                    role="alertdialog"
-                    aria-labelledby="deleteBookButton"
-                >
-                <Modal.Header>
-                    <Modal.Title>Delete book</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This action cannot be undone.
-                    Do you want do delete {book.title}?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button 
-                        variant="secondary" 
-                        onClick={handleCloseBookAlert} 
-                        role="button" 
-                    >
-                        Cancel
-                    </Button>
-                    <Button 
-                        variant="danger" 
-                        onClick={() => handleDeleteBook(book._id, book.ownerId)}
-                        role="button"
-                    >
-                        Delete book
-                    </Button>
-                    </Modal.Footer>
-                </Modal>
             </Card>
         </Col>
     );
@@ -344,10 +313,12 @@ function Profile(props:userDetails){
     
     return(
         <React.Fragment>
-                        
+            
+            {/* User info */}            
             <Row>
                 <Col className="text-center my-5">
                     <Image 
+                        id={userId}
                         src={userAvatar} 
                         width={171}
                         height={180}
@@ -359,6 +330,7 @@ function Profile(props:userDetails){
                 </Col>
             </Row>
 
+            {/* Account info */}
             <Row>
                 <Col className='my-5'>
                     <div className='shadow p-5'>
@@ -413,13 +385,53 @@ function Profile(props:userDetails){
                 </Col>
             </Row>
 
+            {/* Book list */}
             <Row className='shadow p-5'>
                 <h3 className='text-yellow'>Books owned</h3>
                 {booksCols}
+
+                {/* Book modal */}
+                <Modal
+                    id="deleteBookAlert"
+                    show={showBookAlert}
+                    onHide={handleCloseBookAlert}
+                    backdrop="static"
+                    keyboard={false}
+                    role="alertdialog"
+                    aria-labelledby="deleteBookButton"
+                >
+                <Modal.Header>
+                    <Modal.Title>Delete book</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    This action cannot be undone.
+                    Do you want do delete this book?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button 
+                        variant="secondary" 
+                        onClick={handleCloseBookAlert} 
+                        role="button" 
+                    >
+                        Cancel
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        onClick={() => handleDeleteBook(bookToDeleteId)}
+                        role="button"
+                    >
+                        Delete book
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
             </Row>
+
+            {/* Review list */}
             <Row className='shadow p-5'>
                 <h3 className='text-yellow'>Reviews posted</h3>
                 {reviewCols}
+
+                {/* Review modal */}
                 <Modal
                     id="deleteReviewAlert"
                     show={showReviewAlert}
