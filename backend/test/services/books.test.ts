@@ -78,9 +78,8 @@ describe('\'books\' service', () => {
   });
 
   it('creates book with no cover', async () => {
-    await expect( async () => {
-      const book = await app.service('book').create(bookNoCover, {user:userInfoId});
-    }).rejects.toThrow();
+    const book = await app.service('books').create(bookNoCover, {user:userInfoId});
+    expect(book).toBeTruthy();
   });
 
   it('creates book without owner', async () => {
