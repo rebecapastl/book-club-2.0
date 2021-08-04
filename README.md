@@ -14,7 +14,13 @@
 
 The Book Club is a single-page website that allows users to search for books available for trading or borrowing and write reviews on the books.
 
+## Visit the project: 
+
+https://bookclub.494906.xyz/
+
 ## Requirements:
+
+To replicate this project, you will need:
 
 - Google Cloud Platform
 - MongoDB Atlas
