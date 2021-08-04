@@ -16,6 +16,9 @@ The Book Club is a single-page website that allows users to search for books ava
 
 ## Requirements:
 
+- Google Cloud Platform
+- MongoDB Atlas
+
 ## Deployment:
 
 Download the files from the repository to your local computer.
