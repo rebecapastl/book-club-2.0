@@ -59,7 +59,7 @@ export default (options = {}): Hook => {
       // Password id can't be longer than 60 characters
       .substring(0, 60);
 
-    let avatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEP_MMlRInjPLsrly2_ThlKq_ytlxjIqap1w&usqp=CAU';
+    let avatar = '/images/noUserAvatar.png';
 
     if (data.avatar){
       avatar = data.avatar

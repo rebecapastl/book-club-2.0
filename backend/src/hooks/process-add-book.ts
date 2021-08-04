@@ -40,13 +40,18 @@ export default (options = {}): Hook => {
       // Author can't be longer than 60 characters
       .substring(0, 60);
 
-    const cover = data.cover
-      // Cover can't be longer than 20000 characters
-      .substring(0, 20000);
-
     const availability = data.availability
       // Availability can't be longer than 20 characters
       .substring(0, 20);
+
+    let cover = '/images/noBookCover.png';
+
+    if (data.cover){
+      cover = data.cover
+        // Avatar id can't be longer than 20000 characters
+        .substring(0, 20000);
+    }
+
 
     // Override the original data (so that people can't submit additional stuff)
     context.data = {
