@@ -127,6 +127,7 @@ No Image user avatar: personal colection
 - Book images (books submitted by the application and stored at the bookclub database on MongoDB)  
    
 No Image book cover: personal colection 
+The Silmarillion and The Hobbit: personal colection
 
 ## User Manual:
 
