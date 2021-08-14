@@ -97,6 +97,11 @@ If the frontend build files are stored in another folder, the relative path from
 After setting the variables and building the frontend files, access the backend folder (```cd backend```) and install the packages (```npm install```).  
 Run the backend accessing the frontend built files using the command ```npm run dev``` (or choose a port ```PORT=8080 npm run dev```).
 
+#### Analytics
+
+To run ananalytics with Google Analytics on the project, replace the tracking id in ```project/frontend/src/pages/Main.tsx``` with your own GA tracking ID.
+
+```const trackingId = "UA-202922252-1"; // Replace with your Google Analytics tracking ID```
 
 ## Developer:
 
