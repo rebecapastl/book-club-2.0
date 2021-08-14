@@ -38,6 +38,11 @@ app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', express.static(app.get('public')));
 //add routes for other pages
+app.use('/users', express.static(app.get('public')));
+app.use('/books', express.static(app.get('public')));
+//indiviual routes do not work:
+app.use('/user/:id', express.static(app.get('public')));
+app.use('/book/:id', express.static(app.get('public')));
 
 // Set up Plugins and providers
 app.configure(express.rest());
